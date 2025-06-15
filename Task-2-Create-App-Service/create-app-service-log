@@ -1,1 +1,457 @@
+Requesting a Cloud Shell.Succeeded. 
+Connecting terminal...
 
+Your Cloud Shell session will be ephemeral so no files or system changes will persist beyond your current session.
+azureuser [ ~ ]$ az appservice plan create \
+  --name VaishAppServicePlan \
+  --resource-group RG-Vaishnavi-App \
+  --sku FREE \
+  --is-linux
+{
+  "elasticScaleEnabled": false,
+  "extendedLocation": null,
+  "freeOfferExpirationTime": null,
+  "geoRegion": "East US",
+  "hostingEnvironmentProfile": null,
+  "hyperV": false,
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-App/providers/Microsoft.Web/serverfarms/VaishAppServicePlan",
+  "isSpot": false,
+  "isXenon": false,
+  "kind": "linux",
+  "kubeEnvironmentProfile": null,
+  "location": "eastus",
+  "maximumElasticWorkerCount": 1,
+  "maximumNumberOfWorkers": 0,
+  "name": "VaishAppServicePlan",
+  "numberOfSites": 0,
+  "numberOfWorkers": 1,
+  "perSiteScaling": false,
+  "provisioningState": "Succeeded",
+  "reserved": true,
+  "resourceGroup": "RG-Vaishnavi-App",
+  "sku": {
+    "capabilities": null,
+    "capacity": 1,
+    "family": "U",
+    "locations": null,
+    "name": "U13",
+    "size": "U13",
+    "skuCapacity": null,
+    "tier": "LinuxFree"
+  },
+  "spotExpirationTime": null,
+  "status": "Ready",
+  "subscription": "78b45807-4c0f-42c8-a888-49751e831f0a",
+  "tags": null,
+  "targetWorkerCount": 0,
+  "targetWorkerSizeId": 0,
+  "type": "Microsoft.Web/serverfarms",
+  "workerTierName": null,
+  "zoneRedundant": false
+}
+azureuser [ ~ ]$ az webapp create \
+  --resource-group RG-Vaishnavi-App \
+  --plan VaishAppServicePlan \
+  --name VaishWelcomeWebApp \
+  --runtime "NODE|18-lts" \
+  --deployment-local-git
+Local git is configured with url of 'https://None@vaishwelcomewebapp.scm.azurewebsites.net/VaishWelcomeWebApp.git'
+{
+  "availabilityState": "Normal",
+  "clientAffinityEnabled": true,
+  "clientCertEnabled": false,
+  "clientCertExclusionPaths": null,
+  "clientCertMode": "Required",
+  "cloningInfo": null,
+  "containerSize": 0,
+  "customDomainVerificationId": "FB74BE7A69F24D6A0D97CF536D33FE3AE99F388C19BEDB863D06960F6543C47B",
+  "dailyMemoryTimeQuota": 0,
+  "daprConfig": null,
+  "defaultHostName": "vaishwelcomewebapp.azurewebsites.net",
+  "deploymentLocalGitUrl": "https://None@vaishwelcomewebapp.scm.azurewebsites.net/VaishWelcomeWebApp.git",
+  "enabled": true,
+  "enabledHostNames": [
+    "vaishwelcomewebapp.azurewebsites.net",
+    "vaishwelcomewebapp.scm.azurewebsites.net"
+  ],
+  "endToEndEncryptionEnabled": false,
+  "extendedLocation": null,
+  "ftpPublishingUrl": "ftps://waws-prod-blu-547.ftp.azurewebsites.windows.net/site/wwwroot",
+  "hostNameSslStates": [
+    {
+      "certificateResourceId": null,
+      "hostType": "Standard",
+      "ipBasedSslResult": null,
+      "ipBasedSslState": "NotConfigured",
+      "name": "vaishwelcomewebapp.azurewebsites.net",
+      "sslState": "Disabled",
+      "thumbprint": null,
+      "toUpdate": null,
+      "toUpdateIpBasedSsl": null,
+      "virtualIPv6": null,
+      "virtualIp": null
+    },
+    {
+      "certificateResourceId": null,
+      "hostType": "Repository",
+      "ipBasedSslResult": null,
+      "ipBasedSslState": "NotConfigured",
+      "name": "vaishwelcomewebapp.scm.azurewebsites.net",
+      "sslState": "Disabled",
+      "thumbprint": null,
+      "toUpdate": null,
+      "toUpdateIpBasedSsl": null,
+      "virtualIPv6": null,
+      "virtualIp": null
+    }
+  ],
+  "hostNames": [
+    "vaishwelcomewebapp.azurewebsites.net"
+  ],
+  "hostNamesDisabled": false,
+  "hostingEnvironmentProfile": null,
+  "httpsOnly": false,
+  "hyperV": false,
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-App/providers/Microsoft.Web/sites/VaishWelcomeWebApp",
+  "identity": null,
+  "inProgressOperationId": null,
+  "isDefaultContainer": null,
+  "isXenon": false,
+  "keyVaultReferenceIdentity": "SystemAssigned",
+  "kind": "app,linux",
+  "lastModifiedTimeUtc": "2025-06-15T16:02:39.260000",
+  "location": "East US",
+  "managedEnvironmentId": null,
+  "maxNumberOfWorkers": null,
+  "name": "VaishWelcomeWebApp",
+  "outboundIpAddresses": "20.232.87.139,20.242.208.3,20.242.210.17,20.242.210.202,20.242.210.224,20.242.212.87,20.81.32.87,20.85.172.52,20.85.172.161,20.85.172.183,20.85.173.88,20.85.173.128,20.119.8.59",
+  "possibleOutboundIpAddresses": "20.232.87.139,20.242.208.3,20.242.210.17,20.242.210.202,20.242.210.224,20.242.212.87,20.81.32.87,20.85.172.52,20.85.172.161,20.85.172.183,20.85.173.88,20.85.173.128,20.121.252.206,20.121.253.158,20.121.254.132,20.121.255.63,20.121.255.118,20.232.80.43,20.232.80.155,20.232.81.165,20.232.82.241,20.232.84.185,20.232.86.20,20.232.87.21,20.242.212.153,20.242.213.222,20.242.215.75,20.242.215.82,20.242.215.218,20.242.215.246,20.119.8.59",
+  "publicNetworkAccess": null,
+  "redundancyMode": "None",
+  "repositorySiteName": "VaishWelcomeWebApp",
+  "reserved": true,
+  "resourceConfig": null,
+  "resourceGroup": "RG-Vaishnavi-App",
+  "scmSiteAlsoStopped": false,
+  "serverFarmId": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-App/providers/Microsoft.Web/serverfarms/VaishAppServicePlan",
+  "siteConfig": {
+    "acrUseManagedIdentityCreds": false,
+    "acrUserManagedIdentityId": null,
+    "alwaysOn": false,
+    "antivirusScanEnabled": null,
+    "apiDefinition": null,
+    "apiManagementConfig": null,
+    "appCommandLine": null,
+    "appSettings": null,
+    "autoHealEnabled": null,
+    "autoHealRules": null,
+    "autoSwapSlotName": null,
+    "azureMonitorLogCategories": null,
+    "azureStorageAccounts": null,
+    "clusteringEnabled": false,
+    "connectionStrings": null,
+    "cors": null,
+    "customAppPoolIdentityAdminState": null,
+    "customAppPoolIdentityTenantState": null,
+    "defaultDocuments": null,
+    "detailedErrorLoggingEnabled": null,
+    "documentRoot": null,
+    "elasticWebAppScaleLimit": 0,
+    "experiments": null,
+    "fileChangeAuditEnabled": null,
+    "ftpsState": null,
+    "functionAppScaleLimit": null,
+    "functionsRuntimeScaleMonitoringEnabled": null,
+    "handlerMappings": null,
+    "healthCheckPath": null,
+    "http20Enabled": false,
+    "http20ProxyFlag": null,
+    "httpLoggingEnabled": null,
+    "ipSecurityRestrictions": [
+      {
+        "action": "Allow",
+        "description": "Allow all access",
+        "headers": null,
+        "ipAddress": "Any",
+        "name": "Allow all",
+        "priority": 2147483647,
+        "subnetMask": null,
+        "subnetTrafficTag": null,
+        "tag": null,
+        "vnetSubnetResourceId": null,
+        "vnetTrafficTag": null
+      }
+    ],
+    "ipSecurityRestrictionsDefaultAction": null,
+    "javaContainer": null,
+    "javaContainerVersion": null,
+    "javaVersion": null,
+    "keyVaultReferenceIdentity": null,
+    "limits": null,
+    "linuxFxVersion": "",
+    "loadBalancing": null,
+    "localMySqlEnabled": null,
+    "logsDirectorySizeLimit": null,
+    "machineKey": null,
+    "managedPipelineMode": null,
+    "managedServiceIdentityId": null,
+    "metadata": null,
+    "minTlsCipherSuite": null,
+    "minTlsVersion": null,
+    "minimumElasticInstanceCount": 0,
+    "netFrameworkVersion": null,
+    "nodeVersion": null,
+    "numberOfWorkers": 1,
+    "phpVersion": null,
+    "powerShellVersion": null,
+    "preWarmedInstanceCount": null,
+    "publicNetworkAccess": null,
+    "publishingPassword": null,
+    "publishingUsername": null,
+    "push": null,
+    "pythonVersion": null,
+    "remoteDebuggingEnabled": null,
+    "remoteDebuggingVersion": null,
+    "requestTracingEnabled": null,
+    "requestTracingExpirationTime": null,
+    "routingRules": null,
+    "runtimeADUser": null,
+    "runtimeADUserPassword": null,
+    "sandboxType": null,
+    "scmIpSecurityRestrictions": [
+      {
+        "action": "Allow",
+        "description": "Allow all access",
+        "headers": null,
+        "ipAddress": "Any",
+        "name": "Allow all",
+        "priority": 2147483647,
+        "subnetMask": null,
+        "subnetTrafficTag": null,
+        "tag": null,
+        "vnetSubnetResourceId": null,
+        "vnetTrafficTag": null
+      }
+    ],
+    "scmIpSecurityRestrictionsDefaultAction": null,
+    "scmIpSecurityRestrictionsUseMain": null,
+    "scmMinTlsCipherSuite": null,
+    "scmMinTlsVersion": null,
+    "scmSupportedTlsCipherSuites": null,
+    "scmType": null,
+    "sitePort": null,
+    "sitePrivateLinkHostEnabled": null,
+    "storageType": null,
+    "supportedTlsCipherSuites": null,
+    "tracingOptions": null,
+    "use32BitWorkerProcess": null,
+    "virtualApplications": null,
+    "vnetName": null,
+    "vnetPrivatePortsCount": null,
+    "vnetRouteAllEnabled": null,
+    "webSocketsEnabled": null,
+    "websiteTimeZone": null,
+    "winAuthAdminState": null,
+    "winAuthTenantState": null,
+    "windowsConfiguredStacks": null,
+    "windowsFxVersion": null,
+    "xManagedServiceIdentityId": null
+  },
+  "slotSwapStatus": null,
+  "state": "Running",
+  "storageAccountRequired": false,
+  "suspendedTill": null,
+  "tags": null,
+  "targetSwapSlot": null,
+  "trafficManagerHostNames": null,
+  "type": "Microsoft.Web/sites",
+  "usageState": "Normal",
+  "virtualNetworkSubnetId": null,
+  "vnetContentShareEnabled": false,
+  "vnetImagePullEnabled": false,
+  "vnetRouteAllEnabled": false,
+  "workloadProfileName": null
+}
+azureuser [ ~ ]$ mkdir welcomeapp
+cd welcomeapp
+azureuser [ ~/welcomeapp ]$ nano index.html
+azureuser [ ~/welcomeapp ]$ git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint:   git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint:   git branch -m <name>
+Initialized empty Git repository in /home/azureuser/welcomeapp/.git/
+azureuser [ ~/welcomeapp ]$ git add .
+azureuser [ ~/welcomeapp ]$ git commit -m "Initial commit with welcome page"
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'azureuser@SandboxHost-638855989317625457.(none)')
+azureuser [ ~/welcomeapp ]$ zip welcomeapp.zip index.html web.config
+        zip warning: name not matched: web.config
+  adding: index.html (deflated 24%)
+azureuser [ ~/welcomeapp ]$ zip welcomeapp.zip index.html
+updating: index.html (deflated 24%)
+azureuser [ ~/welcomeapp ]$ az webapp deploy \
+  --resource-group RG-Vaishnavi-App \
+  --name vaishwelcomewebapp \
+  --src-path welcomeapp.zip \
+  --type zip
+Initiating deployment
+Deploying from local path: welcomeapp.zip
+Warming up Kudu before deployment.
+Polling the status of sync deployment. Start Time: 2025-06-15 16:10:39.434504+00:00 UTC
+Status: Build successful. Time: 1(s)
+Status: Starting the site... Time: 17(s)
+Status: Site started successfully. Time: 33(s)
+Deployment has completed successfully
+You can visit your app at: http://vaishwelcomewebapp.azurewebsites.net
+{
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-App/providers/Microsoft.Web/sites/vaishwelcomewebapp/deploymentStatus/4b7c11f9-795b-47e7-97a3-757905e8eb92",
+  "location": "East US",
+  "name": "4b7c11f9-795b-47e7-97a3-757905e8eb92",
+  "properties": {
+    "deploymentId": "4b7c11f9-795b-47e7-97a3-757905e8eb92",
+    "errors": null,
+    "failedInstancesLogs": null,
+    "numberOfInstancesFailed": 0,
+    "numberOfInstancesInProgress": 0,
+    "numberOfInstancesSuccessful": 1,
+    "status": "RuntimeSuccessful"
+  },
+  "resourceGroup": "RG-Vaishnavi-App",
+  "type": "Microsoft.Web/sites/deploymentStatus"
+}
+azureuser [ ~/welcomeapp ]$ zip -r webapp.zip .
+  adding: index.html (deflated 24%)
+  adding: welcomeapp.zip (stored 0%)
+  adding: .git/ (stored 0%)
+  adding: .git/info/ (stored 0%)
+  adding: .git/info/exclude (deflated 28%)
+  adding: .git/branches/ (stored 0%)
+  adding: .git/hooks/ (stored 0%)
+  adding: .git/hooks/applypatch-msg.sample (deflated 42%)
+  adding: .git/hooks/push-to-checkout.sample (deflated 55%)
+  adding: .git/hooks/pre-push.sample (deflated 49%)
+  adding: .git/hooks/update.sample (deflated 68%)
+  adding: .git/hooks/post-update.sample (deflated 27%)
+  adding: .git/hooks/prepare-commit-msg.sample (deflated 50%)
+  adding: .git/hooks/pre-receive.sample (deflated 40%)
+  adding: .git/hooks/commit-msg.sample (deflated 44%)
+  adding: .git/hooks/pre-commit.sample (deflated 45%)
+  adding: .git/hooks/pre-rebase.sample (deflated 59%)
+  adding: .git/hooks/pre-merge-commit.sample (deflated 39%)
+  adding: .git/hooks/fsmonitor-watchman.sample (deflated 62%)
+  adding: .git/hooks/sendemail-validate.sample (deflated 58%)
+  adding: .git/hooks/pre-applypatch.sample (deflated 38%)
+  adding: .git/HEAD (stored 0%)
+  adding: .git/refs/ (stored 0%)
+  adding: .git/refs/heads/ (stored 0%)
+  adding: .git/refs/tags/ (stored 0%)
+  adding: .git/description (deflated 14%)
+  adding: .git/config (deflated 14%)
+  adding: .git/objects/ (stored 0%)
+  adding: .git/objects/info/ (stored 0%)
+  adding: .git/objects/pack/ (stored 0%)
+  adding: .git/objects/66/ (stored 0%)
+  adding: .git/objects/66/336232af936bd2a61b996366286b8ae171633a (stored 0%)
+  adding: .git/objects/86/ (stored 0%)
+  adding: .git/objects/86/b8d6cc944d61a269eb6615ca0f4bc24282f3b5 (stored 0%)
+  adding: .git/index (deflated 10%)
+azureuser [ ~/welcomeapp ]$ az webapp deployment source config-zip \
+  --resource-group RG-Vaishnavi-Linux \
+  --name VaishWelcomeWebApp \
+  --src webapp.zip
+This command has been deprecated and will be removed in a future release. Use 'az webapp deploy' instead.
+Getting scm site credentials for zip deployment
+(ResourceNotFound) The Resource 'Microsoft.Web/sites/VaishWelcomeWebApp' under resource group 'RG-Vaishnavi-Linux' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+Code: ResourceNotFound
+Message: The Resource 'Microsoft.Web/sites/VaishWelcomeWebApp' under resource group 'RG-Vaishnavi-Linux' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+azureuser [ ~/welcomeapp ]$ az webapp list --query "[].{name:name, resourceGroup:resourceGroup}" --output table
+Name                ResourceGroup
+------------------  ----------------
+VaishWelcomeWebApp  RG-Vaishnavi-App
+azureuser [ ~/welcomeapp ]$ rm webapp.zip
+zip webapp.zip index.html
+  adding: index.html (deflated 24%)
+azureuser [ ~/welcomeapp ]$ az webapp deploy \
+  --resource-group RG-Vaishnavi-App \
+  --name VaishWelcomeWebApp \
+  --src-path webapp.zip \
+  --type zip
+Initiating deployment
+Deploying from local path: webapp.zip
+Warming up Kudu before deployment.
+Warmed up Kudu instance successfully.
+Polling the status of sync deployment. Start Time: 2025-06-15 16:21:44.590521+00:00 UTC
+Status: Build successful. Time: 1(s)
+Status: Site started successfully. Time: 17(s)
+Deployment has completed successfully
+You can visit your app at: http://vaishwelcomewebapp.azurewebsites.net
+{
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-App/providers/Microsoft.Web/sites/VaishWelcomeWebApp/deploymentStatus/f94574e1-78f9-471f-9fcc-812c844aa8cb",
+  "location": "East US",
+  "name": "f94574e1-78f9-471f-9fcc-812c844aa8cb",
+  "properties": {
+    "deploymentId": "f94574e1-78f9-471f-9fcc-812c844aa8cb",
+    "errors": null,
+    "failedInstancesLogs": null,
+    "numberOfInstancesFailed": 0,
+    "numberOfInstancesInProgress": 0,
+    "numberOfInstancesSuccessful": 1,
+    "status": "RuntimeSuccessful"
+  },
+  "resourceGroup": "RG-Vaishnavi-App",
+  "type": "Microsoft.Web/sites/deploymentStatus"
+}
+azureuser [ ~/welcomeapp ]$ ls
+index.html  webapp.zip  welcomeapp.zip
+azureuser [ ~/welcomeapp ]$ rm -f webapp.zip
+zip webapp.zip index.html
+  adding: index.html (deflated 24%)
+azureuser [ ~/welcomeapp ]$ az webapp deploy \
+  --resource-group RG-Vaishnavi-App \
+  --name VaishWelcomeWebApp \
+  --src-path webapp.zip \
+  --type zip
+Initiating deployment
+Deploying from local path: webapp.zip
+Warming up Kudu before deployment.
+Warmed up Kudu instance successfully.
+Polling the status of sync deployment. Start Time: 2025-06-15 16:25:05.147923+00:00 UTC
+Status: Build successful. Time: 1(s)
+Status: Site started successfully. Time: 16(s)
+Deployment has completed successfully
+You can visit your app at: http://vaishwelcomewebapp.azurewebsites.net
+{
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-App/providers/Microsoft.Web/sites/VaishWelcomeWebApp/deploymentStatus/20fc0ec5-e903-48bf-a150-c34484794689",
+  "location": "East US",
+  "name": "20fc0ec5-e903-48bf-a150-c34484794689",
+  "properties": {
+    "deploymentId": "20fc0ec5-e903-48bf-a150-c34484794689",
+    "errors": null,
+    "failedInstancesLogs": null,
+    "numberOfInstancesFailed": 0,
+    "numberOfInstancesInProgress": 0,
+    "numberOfInstancesSuccessful": 1,
+    "status": "RuntimeSuccessful"
+  },
+  "resourceGroup": "RG-Vaishnavi-App",
+  "type": "Microsoft.Web/sites/deploymentStatus"
+}
+azureuser [ ~/welcomeapp ]$ 

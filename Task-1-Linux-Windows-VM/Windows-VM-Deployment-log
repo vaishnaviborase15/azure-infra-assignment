@@ -24,15 +24,6 @@ azureuser [ ~ ]$ az group create --name $resourceGroup --location $location
   "tags": null,
   "type": "Microsoft.Resources/resourceGroups"
 }
-azureuser [ ~ ]$ az vm create \
-  --resource-group $resourceGroup \
-  --name $vmName \
-  --image Win2019Datacenter \
-  --admin-username $adminUsername \
-  --admin-password $adminPassword \
-  --size Standard_B1s \
-  --authentication-type password
-{"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Resources/deployments/vm_deploy_gPK0Up44ToDUzVAPytBRWuQw5xYxrprg","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"InvalidParameter","target":"osProfile.computerName","message":"Windows computer name cannot be more than 15 characters long, be entirely numeric, or contain the following characters: ` ~ ! @ # $ % ^ & * ( ) = + _ [ ] { } \\ | ; : . ' \" , < > / ?."}]}}
 azureuser [ ~ ]$ vmName="VaishWinVM"
 azureuser [ ~ ]$ az vm create \
   --resource-group $resourceGroup \

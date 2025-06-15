@@ -1,0 +1,483 @@
+Requesting a Cloud Shell.Succeeded. 
+Connecting terminal...
+
+Welcome to Azure Cloud Shell
+
+Type "az" to use Azure CLI
+Type "help" to learn about Cloud Shell
+
+Your Cloud Shell session will be ephemeral so no files or system changes will persist beyond your current session.
+azureuser [ ~ ]$ resourceGroup="RG-Vaishnavi-Windows"
+location="eastus"
+vmName="VaishnaviWindowsVM"
+adminUsername="vaishnavi"
+adminPassword="Vaishnavi@1234"
+azureuser [ ~ ]$ az group create --name $resourceGroup --location $location
+{
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "RG-Vaishnavi-Windows",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+azureuser [ ~ ]$ az vm create \
+  --resource-group $resourceGroup \
+  --name $vmName \
+  --image Win2019Datacenter \
+  --admin-username $adminUsername \
+  --admin-password $adminPassword \
+  --size Standard_B1s \
+  --authentication-type password
+{"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Resources/deployments/vm_deploy_gPK0Up44ToDUzVAPytBRWuQw5xYxrprg","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"InvalidParameter","target":"osProfile.computerName","message":"Windows computer name cannot be more than 15 characters long, be entirely numeric, or contain the following characters: ` ~ ! @ # $ % ^ & * ( ) = + _ [ ] { } \\ | ; : . ' \" , < > / ?."}]}}
+azureuser [ ~ ]$ vmName="VaishWinVM"
+azureuser [ ~ ]$ az vm create \
+  --resource-group $resourceGroup \
+  --name $vmName \
+  --image Win2019Datacenter \
+  --admin-username $adminUsername \
+  --admin-password $adminPassword \
+  --size Standard_B1s \
+  --authentication-type password
+{
+  "fqdns": "",
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Compute/virtualMachines/VaishWinVM",
+  "location": "eastus",
+  "macAddress": "00-0D-3A-13-DC-CA",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.5",
+  "publicIpAddress": "172.191.23.109",
+  "resourceGroup": "RG-Vaishnavi-Windows",
+  "zones": ""
+}
+azureuser [ ~ ]$ az vm open-port --port 3389 --resource-group $resourceGroup --name $vmName
+{
+  "defaultSecurityRules": [
+    {
+      "access": "Allow",
+      "description": "Allow inbound traffic from all VMs in VNET",
+      "destinationAddressPrefix": "VirtualNetwork",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "*",
+      "destinationPortRanges": [],
+      "direction": "Inbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/defaultSecurityRules/AllowVnetInBound",
+      "name": "AllowVnetInBound",
+      "priority": 65000,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "VirtualNetwork",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules"
+    },
+    {
+      "access": "Allow",
+      "description": "Allow inbound traffic from azure load balancer",
+      "destinationAddressPrefix": "*",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "*",
+      "destinationPortRanges": [],
+      "direction": "Inbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+      "name": "AllowAzureLoadBalancerInBound",
+      "priority": 65001,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "AzureLoadBalancer",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules"
+    },
+    {
+      "access": "Deny",
+      "description": "Deny all inbound traffic",
+      "destinationAddressPrefix": "*",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "*",
+      "destinationPortRanges": [],
+      "direction": "Inbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/defaultSecurityRules/DenyAllInBound",
+      "name": "DenyAllInBound",
+      "priority": 65500,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "*",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules"
+    },
+    {
+      "access": "Allow",
+      "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+      "destinationAddressPrefix": "VirtualNetwork",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "*",
+      "destinationPortRanges": [],
+      "direction": "Outbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/defaultSecurityRules/AllowVnetOutBound",
+      "name": "AllowVnetOutBound",
+      "priority": 65000,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "VirtualNetwork",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules"
+    },
+    {
+      "access": "Allow",
+      "description": "Allow outbound traffic from all VMs to Internet",
+      "destinationAddressPrefix": "Internet",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "*",
+      "destinationPortRanges": [],
+      "direction": "Outbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/defaultSecurityRules/AllowInternetOutBound",
+      "name": "AllowInternetOutBound",
+      "priority": 65001,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "*",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules"
+    },
+    {
+      "access": "Deny",
+      "description": "Deny all outbound traffic",
+      "destinationAddressPrefix": "*",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "*",
+      "destinationPortRanges": [],
+      "direction": "Outbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/defaultSecurityRules/DenyAllOutBound",
+      "name": "DenyAllOutBound",
+      "priority": 65500,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "*",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules"
+    }
+  ],
+  "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG",
+  "location": "eastus",
+  "name": "VaishWinVMNSG",
+  "networkInterfaces": [
+    {
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkInterfaces/VaishWinVMVMNic",
+      "resourceGroup": "RG-Vaishnavi-Windows"
+    }
+  ],
+  "provisioningState": "Succeeded",
+  "resourceGroup": "RG-Vaishnavi-Windows",
+  "resourceGuid": "4277aee2-738b-4e26-b156-c268e4f7dfe7",
+  "securityRules": [
+    {
+      "access": "Allow",
+      "destinationAddressPrefix": "*",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "3389",
+      "destinationPortRanges": [],
+      "direction": "Inbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/securityRules/rdp",
+      "name": "rdp",
+      "priority": 1000,
+      "protocol": "Tcp",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "*",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/securityRules"
+    },
+    {
+      "access": "Allow",
+      "destinationAddressPrefix": "*",
+      "destinationAddressPrefixes": [],
+      "destinationPortRange": "3389",
+      "destinationPortRanges": [],
+      "direction": "Inbound",
+      "etag": "W/\"36931415-27bf-40a0-96dc-513c9058612e\"",
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkSecurityGroups/VaishWinVMNSG/securityRules/open-port-3389",
+      "name": "open-port-3389",
+      "priority": 900,
+      "protocol": "*",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "sourceAddressPrefix": "*",
+      "sourceAddressPrefixes": [],
+      "sourcePortRange": "*",
+      "sourcePortRanges": [],
+      "type": "Microsoft.Network/networkSecurityGroups/securityRules"
+    }
+  ],
+  "tags": {},
+  "type": "Microsoft.Network/networkSecurityGroups"
+}
+azureuser [ ~ ]$ az vm list-ip-addresses \
+  --resource-group $resourceGroup \
+  --name $vmName \
+  --query "[].virtualMachine.network.publicIpAddresses[].ipAddress" \
+  -o tsv
+172.191.23.109
+azureuser [ ~ ]$ az vm user update \
+  --resource-group RG-Vaishnavi-Windows \
+  --name VaishnaviWindowsVM \
+  --username vaishnavi \
+  --password vaish@123
+(ResourceNotFound) The Resource 'Microsoft.Compute/virtualMachines/VaishnaviWindowsVM' under resource group 'RG-Vaishnavi-Windows' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+Code: ResourceNotFound
+Message: The Resource 'Microsoft.Compute/virtualMachines/VaishnaviWindowsVM' under resource group 'RG-Vaishnavi-Windows' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+azureuser [ ~ ]$ az vm list -g RG-Vaishnavi-Windows -o table
+Name        ResourceGroup         Location    Zones
+----------  --------------------  ----------  -------
+VaishWinVM  RG-Vaishnavi-Windows  eastus
+azureuser [ ~ ]$ az vm user update \
+  --resource-group RG-Vaishnavi-Windows \
+  --name VaishWinVM \
+  --username vaishnavi \
+  --password vaish@123
+(VMExtensionProvisioningError) VM has reported a user failure when processing extension 'enablevmaccess'. Please correct the error and try again. (publisher 'Microsoft.Compute' and type 'VMAccessAgent'). Error code: '4'. Error message: 'Cannot update Remote Desktop Connection settings for Administrator account. Error: System.OutOfMemoryException: Insufficient memory to continue the execution of the program.
+   at NetFwTypeLib.INetFwRules.GetEnumerator()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktopFirewallRules()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktop()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.VMAccessExtension.OnEnable()'. Detailed error: ''. More information on troubleshooting is available at https://aka.ms/vmextensionwindowstroubleshoot.
+Code: VMExtensionProvisioningError
+Message: VM has reported a user failure when processing extension 'enablevmaccess'. Please correct the error and try again. (publisher 'Microsoft.Compute' and type 'VMAccessAgent'). Error code: '4'. Error message: 'Cannot update Remote Desktop Connection settings for Administrator account. Error: System.OutOfMemoryException: Insufficient memory to continue the execution of the program.
+   at NetFwTypeLib.INetFwRules.GetEnumerator()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktopFirewallRules()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktop()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.VMAccessExtension.OnEnable()'. Detailed error: ''. More information on troubleshooting is available at https://aka.ms/vmextensionwindowstroubleshoot.
+azureuser [ ~ ]$ az vm deallocate --resource-group RG-Vaishnavi-Windows --name VaishWinVM
+azureuser [ ~ ]$ az vm resize \
+  --resource-group RG-Vaishnavi-Windows \
+  --name VaishWinVM \
+  --size Standard_B2s
+{
+  "additionalCapabilities": null,
+  "applicationProfile": null,
+  "availabilitySet": null,
+  "billingProfile": null,
+  "capacityReservation": null,
+  "diagnosticsProfile": null,
+  "etag": "\"6\"",
+  "evictionPolicy": null,
+  "extendedLocation": null,
+  "extensionsTimeBudget": null,
+  "hardwareProfile": {
+    "vmSize": "Standard_B2s",
+    "vmSizeProperties": null
+  },
+  "host": null,
+  "hostGroup": null,
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Compute/virtualMachines/VaishWinVM",
+  "identity": null,
+  "instanceView": null,
+  "licenseType": null,
+  "location": "eastus",
+  "managedBy": null,
+  "name": "VaishWinVM",
+  "networkProfile": {
+    "networkApiVersion": null,
+    "networkInterfaceConfigurations": null,
+    "networkInterfaces": [
+      {
+        "deleteOption": null,
+        "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Network/networkInterfaces/VaishWinVMVMNic",
+        "primary": null,
+        "resourceGroup": "RG-Vaishnavi-Windows"
+      }
+    ]
+  },
+  "osProfile": {
+    "adminPassword": null,
+    "adminUsername": "vaishnavi",
+    "allowExtensionOperations": true,
+    "computerName": "VaishWinVM",
+    "customData": null,
+    "linuxConfiguration": null,
+    "requireGuestProvisionSignal": true,
+    "secrets": [],
+    "windowsConfiguration": {
+      "additionalUnattendContent": null,
+      "enableAutomaticUpdates": true,
+      "enableVmAgentPlatformUpdates": false,
+      "patchSettings": {
+        "assessmentMode": "ImageDefault",
+        "automaticByPlatformSettings": null,
+        "enableHotpatching": null,
+        "patchMode": "AutomaticByOS"
+      },
+      "provisionVmAgent": true,
+      "timeZone": null,
+      "winRm": null
+    }
+  },
+  "plan": null,
+  "platformFaultDomain": null,
+  "priority": null,
+  "provisioningState": "Succeeded",
+  "proximityPlacementGroup": null,
+  "resourceGroup": "RG-Vaishnavi-Windows",
+  "resources": [
+    {
+      "autoUpgradeMinorVersion": false,
+      "enableAutomaticUpgrade": null,
+      "forceUpdateTag": null,
+      "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Compute/virtualMachines/VaishWinVM/extensions/enablevmaccess",
+      "instanceView": null,
+      "location": "eastus",
+      "name": "enablevmaccess",
+      "protectedSettings": null,
+      "protectedSettingsFromKeyVault": null,
+      "provisionAfterExtensions": null,
+      "provisioningState": "Failed",
+      "publisher": "Microsoft.Compute",
+      "resourceGroup": "RG-Vaishnavi-Windows",
+      "settings": {
+        "UserName": "vaishnavi"
+      },
+      "suppressFailures": null,
+      "tags": null,
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "typeHandlerVersion": "2.4",
+      "typePropertiesType": "VMAccessAgent"
+    }
+  ],
+  "scheduledEventsPolicy": null,
+  "scheduledEventsProfile": null,
+  "securityProfile": {
+    "encryptionAtHost": null,
+    "encryptionIdentity": null,
+    "proxyAgentSettings": null,
+    "securityType": "TrustedLaunch",
+    "uefiSettings": {
+      "secureBootEnabled": true,
+      "vTpmEnabled": true
+    }
+  },
+  "storageProfile": {
+    "dataDisks": [],
+    "diskControllerType": "SCSI",
+    "imageReference": {
+      "communityGalleryImageId": null,
+      "exactVersion": "17763.7434.250605",
+      "id": null,
+      "offer": "WindowsServer",
+      "publisher": "MicrosoftWindowsServer",
+      "sharedGalleryImageId": null,
+      "sku": "2019-datacenter-gensecond",
+      "version": "latest"
+    },
+    "osDisk": {
+      "caching": "ReadWrite",
+      "createOption": "FromImage",
+      "deleteOption": "Detach",
+      "diffDiskSettings": null,
+      "diskSizeGb": null,
+      "encryptionSettings": null,
+      "image": null,
+      "managedDisk": {
+        "diskEncryptionSet": null,
+        "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Compute/disks/VaishWinVM_disk1_1f59aff3b3634aad863ff929eba58151",
+        "resourceGroup": "RG-Vaishnavi-Windows",
+        "securityProfile": null,
+        "storageAccountType": null
+      },
+      "name": "VaishWinVM_disk1_1f59aff3b3634aad863ff929eba58151",
+      "osType": "Windows",
+      "vhd": null,
+      "writeAcceleratorEnabled": null
+    }
+  },
+  "tags": {},
+  "timeCreated": "2025-06-15T11:31:52.338618+00:00",
+  "type": "Microsoft.Compute/virtualMachines",
+  "userData": null,
+  "virtualMachineScaleSet": null,
+  "vmId": "bac24183-d8ee-4e1c-aca8-5c59971941e2",
+  "zones": null
+}
+azureuser [ ~ ]$ az vm start --resource-group RG-Vaishnavi-Windows --name VaishWinVM
+azureuser [ ~ ]$ az vm user update \
+  --resource-group RG-Vaishnavi-Windows \
+  --name VaishWinVM \
+  --username vaishnavi \
+  --password vaish@123
+(VMExtensionProvisioningError) VM has reported a user failure when processing extension 'enablevmaccess'. Please correct the error and try again. (publisher 'Microsoft.Compute' and type 'VMAccessAgent'). Error code: '4'. Error message: 'Cannot update Remote Desktop Connection settings for Administrator account. Error: System.OutOfMemoryException: Insufficient memory to continue the execution of the program.
+   at NetFwTypeLib.INetFwRules.GetEnumerator()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktopFirewallRules()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktop()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.VMAccessExtension.OnEnable()'. Detailed error: ''. More information on troubleshooting is available at https://aka.ms/vmextensionwindowstroubleshoot.
+Code: VMExtensionProvisioningError
+Message: VM has reported a user failure when processing extension 'enablevmaccess'. Please correct the error and try again. (publisher 'Microsoft.Compute' and type 'VMAccessAgent'). Error code: '4'. Error message: 'Cannot update Remote Desktop Connection settings for Administrator account. Error: System.OutOfMemoryException: Insufficient memory to continue the execution of the program.
+   at NetFwTypeLib.INetFwRules.GetEnumerator()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktopFirewallRules()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.RemoteDesktopManager.EnableRemoteDesktop()
+   at Microsoft.WindowsAzure.GuestAgent.Plugins.JsonExtensions.VMAccess.VMAccessExtension.OnEnable()'. Detailed error: ''. More information on troubleshooting is available at https://aka.ms/vmextensionwindowstroubleshoot.
+azureuser [ ~ ]$ az vm extension delete \
+  --resource-group RG-Vaishnavi-Windows \
+  --vm-name VaishWinVM \
+  --name enablevmaccess
+azureuser [ ~ ]$ az vm user update \
+  --resource-group RG-Vaishnavi-Windows \
+  --name VaishWinVM \
+  --username vaishnavi \
+  --password vaish@123
+{
+  "autoUpgradeMinorVersion": false,
+  "enableAutomaticUpgrade": null,
+  "forceUpdateTag": null,
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Windows/providers/Microsoft.Compute/virtualMachines/VaishWinVM/extensions/enablevmaccess",
+  "instanceView": null,
+  "location": "eastus",
+  "name": "enablevmaccess",
+  "protectedSettings": null,
+  "protectedSettingsFromKeyVault": null,
+  "provisionAfterExtensions": null,
+  "provisioningState": "Succeeded",
+  "publisher": "Microsoft.Compute",
+  "resourceGroup": "RG-Vaishnavi-Windows",
+  "settings": {
+    "UserName": "vaishnavi"
+  },
+  "suppressFailures": null,
+  "tags": null,
+  "type": "Microsoft.Compute/virtualMachines/extensions",
+  "typeHandlerVersion": "2.4",
+  "typePropertiesType": "VMAccessAgent"
+}
+azureuser [ ~ ]$ az vm show \
+  --resource-group RG-Vaishnavi-Windows \
+  --name VaishWinVM \
+  --show-details \
+  --query publicIps \
+  -o tsv
+172.191.23.109

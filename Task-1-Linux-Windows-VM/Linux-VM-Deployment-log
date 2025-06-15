@@ -1,1 +1,313 @@
+VM for linux
+IP for linux VM >> 20.185.26.47
 
+*************************************************************************************************************************************************************
+
+Requesting a Cloud Shell.Succeeded. 
+Connecting terminal...
+
+Welcome to Azure Cloud Shell
+
+Type "az" to use Azure CLI
+Type "help" to learn about Cloud Shell
+
+Storage fileshare subscription 979e0273-76c3-45ef-8f3a-392e1b66d40d is not registered to Microsoft.CloudShell Namespace. Please follow these instructions "https://aka.ms/RegisterCloudShell" to register. In future, unregistered subscriptions will have restricted access to CloudShell service.
+
+azureuser [ ~ ]$ az
+
+Welcome to Azure CLI!
+---------------------
+Use `az -h` to see available commands or go to https://aka.ms/cli.
+
+Telemetry
+---------
+The Azure CLI collects usage data in order to improve your experience.
+The data is anonymous and does not include commandline argument values.
+The data is collected by Microsoft.
+
+You can change your telemetry settings with `az configure`.
+
+
+     /\
+    /  \    _____   _ _  ___ _
+   / /\ \  |_  / | | | \'__/ _\
+  / ____ \  / /| |_| | | |  __/
+ /_/    \_\/___|\__,_|_|  \___|
+
+
+Welcome to the cool new Azure CLI!
+
+Use `az --version` to display the current version.
+Here are the base commands:
+
+    account             : Manage Azure subscription information.
+    acr                 : Manage private registries with Azure Container Registries.
+    ad                  : Manage Microsoft Entra ID (formerly known as Azure Active Directory, Azure
+                         AD, AAD) entities needed for Azure role-based access control (Azure RBAC)
+                         through Microsoft Graph API.
+    advisor             : Manage Azure Advisor.
+    afd                 : Manage Azure Front Door Standard/Premium.
+    ai-examples         : Add AI powered examples to help content.
+    aks                 : Manage Azure Kubernetes Services.
+    ams                 : Manage Azure Media Services resources.
+    apim                : Manage Azure API Management services.
+    appconfig           : Manage App Configurations.
+    appservice          : Manage App Service plans.
+    aro                 : Manage Azure Red Hat OpenShift clusters.
+    backup              : Manage Azure Backups.
+    batch               : Manage Azure Batch.
+    bicep               : Bicep CLI command group.
+    billing             : Manage Azure Billing.
+    bot                 : Manage Microsoft Azure Bot Service.
+    cache               : Commands to manage CLI objects cached using the `--defer` argument.
+    capacity            : Manage capacity.
+    cdn                 : Manage Azure Content Delivery Networks (CDNs).
+    cloud               : Manage registered Azure clouds.
+    cognitiveservices   : Manage Azure Cognitive Services accounts.
+    compute-fleet       : Manage for Azure Compute Fleet.
+    compute-recommender : Manage sku/zone/region recommender info for compute resources.
+    config              : Manage Azure CLI configuration.
+    configure           : Manage Azure CLI configuration. This command is interactive.
+    connection          : Commands to manage Service Connector local connections which allow local
+                         environment to connect Azure Resource. If you want to manage connection for
+                         compute service, please run 'az webapp/containerapp/spring connection'.
+    consumption         : Manage consumption of Azure resources.
+    container           : Manage Azure Container Instances.
+    containerapp        : Manage Azure Container Apps.
+    cosmosdb            : Manage Azure Cosmos DB database accounts.
+    data-boundary       : Data boundary operations.
+    databoxedge         : Manage device with databoxedge.
+    deployment          : Manage Azure Resource Manager template deployment at subscription scope.
+    deployment-scripts  : Manage deployment scripts at subscription or resource group scope.
+    disk                : Manage Azure Managed Disks.
+    disk-access         : Manage disk access resources.
+    disk-encryption-set : Disk Encryption Set resource.
+    dls                 : Manage Data Lake Store accounts and filesystems.
+    dms                 : Manage Azure Data Migration Service (classic) instances.
+    eventgrid           : Manage Azure Event Grid topics, domains, domain topics, system topics
+                         partner topics, event subscriptions, system topic event subscriptions and
+                         partner topic event subscriptions.
+    eventhubs           : Eventhubs.
+    extension           : Manage and update CLI extensions.
+    feature             : Manage resource provider features.
+    feedback            : Send feedback to the Azure CLI Team.
+    find                : I'm an AI robot, my advice is based on our Azure documentation as well as
+                         the usage patterns of Azure CLI and Azure ARM users. Using me improves
+                         Azure products and documentation.
+    functionapp         : Manage function apps. To install the Azure Functions Core tools see
+                         https://github.com/Azure/azure-functions-core-tools.
+    group               : Manage resource groups and template deployments.
+    hdinsight           : Manage HDInsight resources.
+    identity            : Managed Identities.
+    image               : Manage custom virtual machine images.
+    interactive         : Start interactive mode. Installs the Interactive extension if not
+                         installed already.
+    iot                 : Manage Internet of Things (IoT) assets.
+    keyvault            : Manage KeyVault keys, secrets, and certificates.
+    lab                 : Manage azure devtest labs.
+    lock                : Manage Azure locks.
+    logicapp            : Manage logic apps.
+    login               : Log in to Azure.
+    logout              : Log out to remove access to Azure subscriptions.
+    managed-cassandra   : Azure Managed Cassandra.
+    managedapp          : Manage template solutions provided and maintained by Independent Software
+                         Vendors (ISVs).
+    managedservices     : Manage the registration assignments and definitions in Azure.
+    maps                : Manage Azure Maps.
+    mariadb             : Manage Azure Database for MariaDB servers.
+    ml                  : Manage Azure Machine Learning resources with the Azure CLI ML extension
+                         v2.
+    monitor             : Manage the Azure Monitor Service.
+    mysql               : Manage Azure Database for MySQL servers.
+    netappfiles         : Manage Azure NetApp Files (ANF) Resources.
+    network             : Manage Azure Network resources.
+    policy              : Manage resource policies.
+    postgres            : Manage Azure Database for PostgreSQL servers.
+    ppg                 : Manage Proximity Placement Groups.
+    private-link        : Private-link association CLI command group.
+    provider            : Manage resource providers.
+    redis               : Manage dedicated Redis caches for your Azure applications.
+    relay               : Manage Azure Relay Service namespaces, WCF relays, hybrid connections, and
+                         rules.
+    resource            : Manage Azure resources.
+    resourcemanagement  : Resourcemanagement CLI command group.
+    rest                : Invoke a custom request.
+    restore-point       : Manage restore point with res.
+    role                : Manage Azure role-based access control (Azure RBAC).
+    search              : Manage Azure Search services, admin keys and query keys.
+    security            : Manage your security posture with Microsoft Defender for Cloud.
+    servicebus          : Servicebus.
+    sf                  : Manage and administer Azure Service Fabric clusters.
+    sig                 : Manage shared image gallery.
+    signalr             : Manage Azure SignalR Service.
+    snapshot            : Manage point-in-time copies of managed disks, native blobs, or other
+                         snapshots.
+    sql                 : Manage Azure SQL Databases and Data Warehouses.
+    ssh                 : SSH into resources (Azure VMs, Arc servers, etc) using AAD issued openssh
+                         certificates.
+    sshkey              : Manage ssh public key with vm.
+    stack               : A deployment stack is a native Azure resource type that enables you to
+                         perform operations on a resource collection as an atomic unit.
+    staticwebapp        : Manage static apps.
+    storage             : Manage Azure Cloud Storage resources.
+    survey              : Take Azure CLI survey.
+    synapse             : Manage and operate Synapse Workspace, Spark Pool, SQL Pool.
+    tag                 : Tag Management on a resource.
+    term                : Manage marketplace agreement with marketplaceordering.
+    ts                  : Manage template specs at subscription or resource group scope.
+    upgrade             : Upgrade Azure CLI and extensions.
+    version             : Show the versions of Azure CLI modules and extensions in JSON format by
+                         default or format configured by --output.
+    vm                  : Manage Linux or Windows virtual machines.
+    vmss                : Manage groupings of virtual machines in an Azure Virtual Machine Scale Set
+                         (VMSS).
+    webapp              : Manage web apps.
+
+resourceGroup="RG-Vaishnavi-Linux"
+location="eastus"
+vmName="VaishnaviLinuxVM"
+adminUsername="vaishnavi"
+adminPassword="Vaishnavi@1234"
+
+azureuser [ ~ ]$ az group create --name RG-Vaishnavi-Linux --location westus
+{
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Linux",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "RG-Vaishnavi-Linux",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+
+azureuser [ ~ ]$ az vm create \
+  --resource-group $resourceGroup \
+  --name $vmName \
+  --image UbuntuLTS \
+  --admin-username $adminUsername \
+  --admin-password $adminPassword \
+  --authentication-type password
+Invalid image "UbuntuLTS". Use a valid image URN, custom image name, custom image id, VHD blob URI, or pick an image from ['CentOS85Gen2', 'Debian11', 'OpenSuseLeap154Gen2', 'RHELRaw8LVMGen2', 'SuseSles15SP5', 'Ubuntu2204', 'Ubuntu2404', 'Ubuntu2404Pro', 'FlatcarLinuxFreeGen2', 'Win2022Datacenter', 'Win2022AzureEditionCore', 'Win2019Datacenter', 'Win2016Datacenter', 'Win2012R2Datacenter', 'Win2012Datacenter'].
+See vm create -h for more information on specifying an image.
+
+azureuser [ ~ ]$ az vm create \
+  --resource-group $resourceGroup \
+  --name $vmName \
+  --image Ubuntu2204 \
+  --admin-username $adminUsername \
+  --admin-password $adminPassword \
+  --authentication-type password
+{"error":{"code":"InvalidTemplateDeployment","message":"The template deployment 'vm_deploy_mRUHd75jZVcKZt3vcv7Hhpjg7Jo4fQ6E' is not valid according to the validation procedure. The tracking id is '9ee97f72-aab3-4df4-9205-50a23cbdb754'. See inner errors for details.","details":[{"code":"SkuNotAvailable","message":"The requested VM size for resource 'Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'eastus'. Please try another size or deploy to a different location or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
+azureuser [ ~ ]$  please give me corrcted commands
+
+azureuser [ ~ ]$ az vm create \
+  --resource-group $resourceGroup \
+  --name $vmName \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username $adminUsername \
+  --admin-password $adminPassword \
+  --authentication-type password
+{
+  "fqdns": "",
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Linux/providers/Microsoft.Compute/virtualMachines/VaishnaviLinuxVM",
+  "location": "eastus",
+  "macAddress": "00-22-48-1E-D5-01",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.4",
+  "publicIpAddress": "20.185.26.47",
+  "resourceGroup": "RG-Vaishnavi-Linux",
+  "zones": ""
+}
+
+azureuser [ ~ ]$ ssh vaishnavi@20.185.26.47
+The authenticity of host '20.185.26.47 (20.185.26.47)' can't be established.
+ED25519 key fingerprint is SHA256:vQSjAzHh6TxvLf1lYHVlvEDSdhjNob6iJKoRMm0/Hz0.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '20.185.26.47' (ED25519) to the list of known hosts.
+Load key "/home/azureuser/.ssh/id_rsa": Input/output error
+vaishnavi@20.185.26.47's password: 
+Permission denied, please try again.
+vaishnavi@20.185.26.47's password: 
+Permission denied, please try again.
+vaishnavi@20.185.26.47's password: 
+vaishnavi@20.185.26.47: Permission denied (publickey,password).
+
+azureuser [ ~ ]$ ssh vaishnavi@20.185.26.47
+The authenticity of host '20.185.26.47 (20.185.26.47)' can't be established.
+ED25519 key fingerprint is SHA256:vQSjAzHh6TxvLf1lYHVlvEDSdhjNob6iJKoRMm0/Hz0.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '20.185.26.47' (ED25519) to the list of known hosts.
+Load key "/home/azureuser/.ssh/id_rsa": Input/output error
+vaishnavi@20.185.26.47's password: 
+
+azureuser [ ~ ]$ az vm show --resource-group RG-Vaishnavi-Linux --name VaishnaviLinuxVM --query "provisioningState"
+"Succeeded"
+azureuser [ ~ ]$ az vm list-ip-addresses --resource-group RG-Vaishnavi-Linux --name VaishnaviLinuxVM --query "[].virtualMachine.network.publicIpAddresses[].ipAddress" -o tsv
+20.185.26.47
+azureuser [ ~ ]$ az vm user update --resource-group RG-Vaishnavi-Linux --name VaishnaviLinuxVM --username vaishnavi --password Vaishnavi@1234
+{
+  "autoUpgradeMinorVersion": false,
+  "enableAutomaticUpgrade": null,
+  "forceUpdateTag": null,
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-Vaishnavi-Linux/providers/Microsoft.Compute/virtualMachines/VaishnaviLinuxVM/extensions/enablevmaccess",
+  "instanceView": null,
+  "location": "eastus",
+  "name": "enablevmaccess",
+  "protectedSettings": null,
+  "protectedSettingsFromKeyVault": null,
+  "provisionAfterExtensions": null,
+  "provisioningState": "Succeeded",
+  "publisher": "Microsoft.OSTCExtensions",
+  "resourceGroup": "RG-Vaishnavi-Linux",
+  "settings": {},
+  "suppressFailures": null,
+  "tags": null,
+  "type": "Microsoft.Compute/virtualMachines/extensions",
+  "typeHandlerVersion": "1.5",
+  "typePropertiesType": "VMAccessForLinux"
+}
+azureuser [ ~ ]$ ssh vaishnavi@20.185.26.47
+vaishnavi@20.185.26.47's password: 
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 6.8.0-1029-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sun Jun 15 06:55:47 UTC 2025
+
+  System load:  0.01              Processes:             106
+  Usage of /:   5.3% of 28.89GB   Users logged in:       0
+  Memory usage: 31%               IPv4 address for eth0: 10.0.0.4
+  Swap usage:   0%
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+vaishnavi@VaishnaviLinuxVM:~$ exit
+logout
+Connection to 20.185.26.47 closed.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

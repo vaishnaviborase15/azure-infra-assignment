@@ -163,7 +163,7 @@ Here are the base commands:
                          (VMSS).
     webapp              : Manage web apps.
 
-resourceGroup="RG-Vaishnavi-Linux"
+azureuser [ ~ ]$ resourceGroup="RG-Vaishnavi-Linux"
 location="eastus"
 vmName="VaishnaviLinuxVM"
 adminUsername="vaishnavi"

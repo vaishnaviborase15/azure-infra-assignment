@@ -1,0 +1,201 @@
+Requesting a Cloud Shell.Succeeded. 
+Connecting terminal...
+
+Welcome to Azure Cloud Shell
+
+Type "az" to use Azure CLI
+Type "help" to learn about Cloud Shell
+
+Your Cloud Shell session will be ephemeral so no files or system changes will persist beyond your current session.
+azureuser [ ~ ]$ az group create \
+  --name RG-VaishWebAppDemo \
+  --location centralindia
+{
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-VaishWebAppDemo",
+  "location": "centralindia",
+  "managedBy": null,
+  "name": "RG-VaishWebAppDemo",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+azureuser [ ~ ]$ az acr create \
+  --resource-group RG-VaishWebAppDemo \
+  --name vaishacrregistry \
+  --sku Basic
+Resource provider 'Microsoft.ContainerRegistry' used by this operation is not registered. We are registering for you.
+Registration succeeded.
+{
+  "adminUserEnabled": false,
+  "anonymousPullEnabled": false,
+  "creationDate": "2025-06-17T05:06:35.508414+00:00",
+  "dataEndpointEnabled": false,
+  "dataEndpointHostNames": [],
+  "encryption": {
+    "keyVaultProperties": null,
+    "status": "disabled"
+  },
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-VaishWebAppDemo/providers/Microsoft.ContainerRegistry/registries/vaishacrregistry",
+  "identity": null,
+  "location": "centralindia",
+  "loginServer": "vaishacrregistry.azurecr.io",
+  "metadataSearch": "Disabled",
+  "name": "vaishacrregistry",
+  "networkRuleBypassOptions": "AzureServices",
+  "networkRuleSet": null,
+  "policies": {
+    "azureAdAuthenticationAsArmPolicy": {
+      "status": "enabled"
+    },
+    "exportPolicy": {
+      "status": "enabled"
+    },
+    "quarantinePolicy": {
+      "status": "disabled"
+    },
+    "retentionPolicy": {
+      "days": 7,
+      "lastUpdatedTime": "2025-06-17T05:06:40.052424+00:00",
+      "status": "disabled"
+    },
+    "softDeletePolicy": {
+      "lastUpdatedTime": "2025-06-17T05:06:40.052457+00:00",
+      "retentionDays": 7,
+      "status": "disabled"
+    },
+    "trustPolicy": {
+      "status": "disabled",
+      "type": "Notary"
+    }
+  },
+  "privateEndpointConnections": [],
+  "provisioningState": "Succeeded",
+  "publicNetworkAccess": "Enabled",
+  "resourceGroup": "RG-VaishWebAppDemo",
+  "sku": {
+    "name": "Basic",
+    "tier": "Basic"
+  },
+  "status": null,
+  "systemData": {
+    "createdAt": "2025-06-17T05:06:35.508414+00:00",
+    "createdBy": "221106014@rcpit.ac.in",
+    "createdByType": "User",
+    "lastModifiedAt": "2025-06-17T05:06:35.508414+00:00",
+    "lastModifiedBy": "221106014@rcpit.ac.in",
+    "lastModifiedByType": "User"
+  },
+  "tags": {},
+  "type": "Microsoft.ContainerRegistry/registries",
+  "zoneRedundancy": "Disabled"
+}
+azureuser [ ~ ]$ az acr update \
+  --name vaishacrregistry \
+  --admin-enabled true
+{
+  "adminUserEnabled": true,
+  "anonymousPullEnabled": false,
+  "creationDate": "2025-06-17T05:06:35.508414+00:00",
+  "dataEndpointEnabled": false,
+  "dataEndpointHostNames": [],
+  "encryption": {
+    "keyVaultProperties": null,
+    "status": "disabled"
+  },
+  "id": "/subscriptions/78b45807-4c0f-42c8-a888-49751e831f0a/resourceGroups/RG-VaishWebAppDemo/providers/Microsoft.ContainerRegistry/registries/vaishacrregistry",
+  "identity": null,
+  "location": "centralindia",
+  "loginServer": "vaishacrregistry.azurecr.io",
+  "metadataSearch": "Disabled",
+  "name": "vaishacrregistry",
+  "networkRuleBypassOptions": "AzureServices",
+  "networkRuleSet": null,
+  "policies": {
+    "azureAdAuthenticationAsArmPolicy": {
+      "status": "enabled"
+    },
+    "exportPolicy": {
+      "status": "enabled"
+    },
+    "quarantinePolicy": {
+      "status": "disabled"
+    },
+    "retentionPolicy": {
+      "days": 7,
+      "lastUpdatedTime": "2025-06-17T05:06:40.052424+00:00",
+      "status": "disabled"
+    },
+    "softDeletePolicy": {
+      "lastUpdatedTime": "2025-06-17T05:06:40.052457+00:00",
+      "retentionDays": 7,
+      "status": "disabled"
+    },
+    "trustPolicy": {
+      "status": "disabled",
+      "type": "Notary"
+    }
+  },
+  "privateEndpointConnections": [],
+  "provisioningState": "Succeeded",
+  "publicNetworkAccess": "Enabled",
+  "resourceGroup": "RG-VaishWebAppDemo",
+  "sku": {
+    "name": "Basic",
+    "tier": "Basic"
+  },
+  "status": null,
+  "systemData": {
+    "createdAt": "2025-06-17T05:06:35.508414+00:00",
+    "createdBy": "221106014@rcpit.ac.in",
+    "createdByType": "User",
+    "lastModifiedAt": "2025-06-17T05:07:08.402615+00:00",
+    "lastModifiedBy": "221106014@rcpit.ac.in",
+    "lastModifiedByType": "User"
+  },
+  "tags": {},
+  "type": "Microsoft.ContainerRegistry/registries",
+  "zoneRedundancy": "Disabled"
+}
+azureuser [ ~ ]$ az acr credential show \
+  --name vaishacrregistry
+[Warning] This output may compromise security by showing the following secrets: passwords, value. Learn more at: https://go.microsoft.com/fwlink/?linkid=2258669
+{
+  "passwords": [
+    {
+      "name": "password",
+      "value": "This is Secret Key, Unable to Show"
+    },
+    {
+      "name": "password2",
+      "value": "This is Secret Key, Unable to Show"
+    }
+  ],
+  "username": "vaishacrregistry"
+}
+azureuser [ ~ ]$ mkdir vaishwebapp
+cd vaishwebapp
+azureuser [ ~/vaishwebapp ]$ <!DOCTYPE html>
+<html>
+  <body style="background-color: black;">
+    <h1 style="color: wheat;">Welcome to Vaish's Web App!</h1>
+  </body>
+</html>
+bash: !DOCTYPE: event not found
+bash: syntax error near unexpected token `newline'
+bash: syntax error near unexpected token `newline'
+> ^C
+azureuser [ ~/vaishwebapp ]$ nano index.html
+azureuser [ ~/vaishwebapp ]$ echo '<!DOCTYPE html>
+<html>
+  <body style="background-color: black;">
+    <h1 style="color: wheat;">Welcome to Vaish'\''s Web App!</h1>
+  </body>
+</html>' > index.html
+azureuser [ ~ ]$ az acr list --output table
+NAME                            RESOURCE GROUP       LOCATION      SKU    LOGIN SERVER                               CREATION DATE         ADMIN ENABLED
+------------------------------  -------------------  ------------  -----  -----------------------------------------  --------------------  ---------------
+w2containerregistryvaishnavi01  DemoResourceGrW2     centralindia  Basic  w2containerregistryvaishnavi01.azurecr.io  2025-06-17T05:49:35Z  True
+vaishacrregistry                RG-VaishWebAppDemo   centralindia  Basic  vaishacrregistry.azurecr.io                2025-06-17T05:06:35Z  True
+vaishacrregistryvaishnavi01     VaishsResourceGroup  centralindia  Basic  vaishacrregistryvaishnavi01.azurecr.io     2025-06-17T05:23:57Z  True

@@ -454,4 +454,61 @@ You can visit your app at: http://vaishwelcomewebapp.azurewebsites.net
   "resourceGroup": "RG-Vaishnavi-App",
   "type": "Microsoft.Web/sites/deploymentStatus"
 }
-azureuser [ ~/welcomeapp ]$ 
+Requesting a Cloud Shell.Succeeded. 
+Connecting terminal...
+
+Your Cloud Shell session will be ephemeral so no files or system changes will persist beyond your current session.
+azureuser [ ~ ]$ ls
+index.zip  webapp.zip  welcomeapp
+azureuser [ ~ ]$ rm index.zip
+azureuser [ ~ ]$ rm webapp.zip
+azureuser [ ~ ]$ rm welcomeapp
+rm: cannot remove 'welcomeapp': Is a directory
+
+
+azureuser [ ~ ]$ ls
+welcomeapp
+
+azureuser [ ~ ]$ ls
+demowebapp.zip  welcomeapp
+
+azureuser [ ~ ]$ rm -rf welcomeapp
+
+azureuser [ ~ ]$ ls
+demowebapp.zip
+
+
+azureuser [ ~ ]$ az webapp deploy \
+  --resource-group DemoResourceGrW2 \
+  --name DemoWebAppW2 \
+  --src-path demowebapp.zip
+
+Deployment type: zip. To override deployment type, please specify the --type parameter. Possible values: war, jar, ear, zip, startup, script, static
+Initiating deployment
+Deploying from local path: demowebapp.zip
+Polling the status of sync deployment. Start Time: 2025-06-15 18:06:45.378451+00:00 UTC
+Deployment has completed successfully
+You can visit your app at: http://demowebappw2-hrf0gzhda8haa5as.centralindia-01.azurewebsites.net
+{
+  "active": true,
+  "author": "N/A",
+  "author_email": "N/A",
+  "complete": true,
+  "deployer": "OneDeploy",
+  "end_time": "2025-06-15T18:06:45.2349811Z",
+  "id": "3d80a4b36c4543149c878241dc75f77d",
+  "is_readonly": true,
+  "is_temp": false,
+  "last_success_end_time": "2025-06-15T18:06:45.2349811Z",
+  "log_url": "https://demowebappw2-hrf0gzhda8haa5as.scm.centralindia-01.azurewebsites.net/api/deployments/latest/log",
+  "message": "OneDeploy",
+  "progress": "",
+  "provisioningState": "Succeeded",
+  "received_time": "2025-06-15T18:06:44.3755951Z",
+  "site_name": "DemoWebAppW2",
+  "start_time": "2025-06-15T18:06:44.4381003Z",
+  "status": 4,
+  "status_text": "",
+  "url": "https://demowebappw2-hrf0gzhda8haa5as.scm.centralindia-01.azurewebsites.net/api/deployments/latest"
+}
+azureuser [ ~ ]$ 

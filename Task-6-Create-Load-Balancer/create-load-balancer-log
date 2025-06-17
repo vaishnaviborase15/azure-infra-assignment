@@ -1,1 +1,272 @@
 
+Azure Network Architecture Setup and VM Deployment
+==================================================
+
+Part A: Create a Virtual Network with Two Subnets
+--------------------------------------------------
+
+1. Create a Resource Group:
+   az group create --name VNetResourceGroup --location eastus
+
+2. Create Virtual Network with Two Subnets:
+   az network vnet create \
+     --resource-group VNetResourceGroup \
+     --name MainVNet \
+     --address-prefix 10.0.0.0/16 \
+     --subnet-name Subnet-1 \
+     --subnet-prefix 10.0.1.0/24
+
+   az network vnet subnet create \
+     --resource-group VNetResourceGroup \
+     --vnet-name MainVNet \
+     --name Subnet-2 \
+     --address-prefix 10.0.2.0/24
+
+3. Deploy Linux VM in Subnet-1:
+   az vm create \
+     --resource-group VNetResourceGroup \
+     --name LinuxVM \
+     --vnet-name MainVNet \
+     --subnet Subnet-1 \
+     --image Ubuntu2204 \
+     --admin-username azureuser \
+     --generate-ssh-keys
+
+4. Deploy Windows VM in Subnet-1:
+   az vm create \
+     --resource-group VNetResourceGroup \
+     --name WindowsVM \
+     --vnet-name MainVNet \
+     --subnet Subnet-1 \
+     --image Win2022Datacenter \
+     --admin-username azureuser \
+     --admin-password MyP@ssword1234
+
+5. Deploy SQL VM in Subnet-2 (as placeholder for SQL DB):
+   az vm create \
+     --resource-group VNetResourceGroup \
+     --name SQLVM \
+     --vnet-name MainVNet \
+     --subnet Subnet-2 \
+     --image Win2022Datacenter \
+     --admin-username azureuser \
+     --admin-password MyP@ssword1234
+
+Part B: Hub and Spoke Network Setup with VNet Peering
+------------------------------------------------------
+
+1. Create a Resource Group:
+   az group create --name HubSpokeRG --location eastus
+
+2. Create VNets:
+   - Management VNet:
+     az network vnet create \
+       --resource-group HubSpokeRG \
+       --name ManagementVNet \
+       --address-prefix 10.1.0.0/16 \
+       --subnet-name ManagementSubnet \
+       --subnet-prefix 10.1.0.0/24
+
+   - Production VNet:
+     az network vnet create \
+       --resource-group HubSpokeRG \
+       --name ProductionVNet \
+       --address-prefix 10.2.0.0/16 \
+       --subnet-name ProductionSubnet \
+       --subnet-prefix 10.2.0.0/24
+
+   - Testing VNet:
+     az network vnet create \
+       --resource-group HubSpokeRG \
+       --name TestingVNet \
+       --address-prefix 10.3.0.0/16 \
+       --subnet-name TestingSubnet \
+       --subnet-prefix 10.3.0.0/24
+
+   - Development VNet:
+     az network vnet create \
+       --resource-group HubSpokeRG \
+       --name DevelopmentVNet \
+       --address-prefix 10.4.0.0/16 \
+       --subnet-name DevelopmentSubnet \
+       --subnet-prefix 10.4.0.0/24
+
+3. Configure VNet Peering:
+   - Management <-> Production
+   - Management <-> Testing
+   - Management <-> Development
+
+   Example for Management <-> Production:
+   az network vnet peering create \
+     --name ManagementToProduction \
+     --resource-group HubSpokeRG \
+     --vnet-name ManagementVNet \
+     --remote-vnet ProductionVNet \
+     --allow-vnet-access
+
+   az network vnet peering create \
+     --name ProductionToManagement \
+     --resource-group HubSpokeRG \
+     --vnet-name ProductionVNet \
+     --remote-vnet ManagementVNet \
+     --allow-vnet-access
+
+   (Repeat similarly for Testing and Development)
+
+4. Deploy One VM in Each VNet:
+
+   - Management VM:
+     az vm create \
+       --resource-group HubSpokeRG \
+       --name ManagementVM \
+       --vnet-name ManagementVNet \
+       --subnet ManagementSubnet \
+       --image Ubuntu2204 \
+       --admin-username azureuser \
+       --generate-ssh-keys
+
+   - Production VM:
+     az vm create \
+       --resource-group HubSpokeRG \
+       --name ProductionVM \
+       --vnet-name ProductionVNet \
+       --subnet ProductionSubnet \
+       --image Ubuntu2204 \
+       --admin-username azureuser \
+       --generate-ssh-keys
+
+   - Testing VM:
+     az vm create \
+       --resource-group HubSpokeRG \
+       --name TestingVM \
+       --vnet-name TestingVNet \
+       --subnet TestingSubnet \
+       --image Ubuntu2204 \
+       --admin-username azureuser \
+       --generate-ssh-keys
+
+   - Development VM:
+     az vm create \
+       --resource-group HubSpokeRG \
+       --name DevelopmentVM \
+       --vnet-name DevelopmentVNet \
+       --subnet DevelopmentSubnet \
+       --image Ubuntu2204 \
+       --admin-username azureuser \
+       --generate-ssh-keys
+
+5. Verify Connectivity:
+
+   - SSH into Management VM:
+     ssh azureuser@<ManagementVM-Public-IP>
+
+   - Ping VMs using private IPs:
+     ping <ProductionVM-Private-IP>
+     ping <TestingVM-Private-IP>
+     ping <DevelopmentVM-Private-IP>
+
+   (All pings should succeed due to peering)
+
+
+Part C: Load Balancer Setup (Internal and External)
+---------------------------------------------------
+
+1. External Load Balancer (for LinuxVM and WindowsVM)
+-----------------------------------------------------
+
+Step 1: Create a Public IP Address:
+az network public-ip create \
+  --resource-group VNetResourceGroup \
+  --name ExternalLBPublicIP \
+  --sku Basic
+
+Step 2: Create a Backend Pool (via Load Balancer creation):
+az network lb create \
+  --resource-group VNetResourceGroup \
+  --name ExternalLoadBalancer \
+  --sku Basic \
+  --frontend-ip-name ExternalFrontEnd \
+  --backend-pool-name ExternalBackEndPool \
+  --public-ip-address ExternalLBPublicIP \
+  --location eastus
+
+Step 3: Create Health Probe:
+az network lb probe create \
+  --resource-group VNetResourceGroup \
+  --lb-name ExternalLoadBalancer \
+  --name ExternalHealthProbe \
+  --protocol tcp \
+  --port 80
+
+Step 4: Create Load Balancing Rule:
+az network lb rule create \
+  --resource-group VNetResourceGroup \
+  --lb-name ExternalLoadBalancer \
+  --name HTTPRule \
+  --protocol tcp \
+  --frontend-port 80 \
+  --backend-port 80 \
+  --frontend-ip-name ExternalFrontEnd \
+  --backend-pool-name ExternalBackEndPool \
+  --probe-name ExternalHealthProbe
+
+Step 5: Add LinuxVM and WindowsVM NICs to Backend Pool:
+az network nic ip-config address-pool add \
+  --address-pool ExternalBackEndPool \
+  --ip-config-name ipconfig1 \
+  --nic-name <LinuxVM-NIC-Name> \
+  --resource-group VNetResourceGroup \
+  --lb-name ExternalLoadBalancer
+
+az network nic ip-config address-pool add \
+  --address-pool ExternalBackEndPool \
+  --ip-config-name ipconfig1 \
+  --nic-name <WindowsVM-NIC-Name> \
+  --resource-group VNetResourceGroup \
+  --lb-name ExternalLoadBalancer
+
+
+2. Internal Load Balancer (for VMs in Production VNet)
+------------------------------------------------------
+
+Step 1: Create Internal Load Balancer:
+az network lb create \
+  --resource-group HubSpokeRG \
+  --name InternalLoadBalancer \
+  --sku Basic \
+  --vnet-name ProductionVNet \
+  --frontend-ip-name InternalFrontEnd \
+  --backend-pool-name InternalBackEndPool \
+  --private-ip-address 10.2.0.100 \
+  --subnet ProductionSubnet
+
+Step 2: Create Health Probe:
+az network lb probe create \
+  --resource-group HubSpokeRG \
+  --lb-name InternalLoadBalancer \
+  --name InternalHealthProbe \
+  --protocol tcp \
+  --port 80
+
+Step 3: Create Load Balancing Rule:
+az network lb rule create \
+  --resource-group HubSpokeRG \
+  --lb-name InternalLoadBalancer \
+  --name InternalHTTPRule \
+  --protocol tcp \
+  --frontend-port 80 \
+  --backend-port 80 \
+  --frontend-ip-name InternalFrontEnd \
+  --backend-pool-name InternalBackEndPool \
+  --probe-name InternalHealthProbe
+
+Step 4: Add ProductionVM NIC to Backend Pool:
+az network nic ip-config address-pool add \
+  --address-pool InternalBackEndPool \
+  --ip-config-name ipconfig1 \
+  --nic-name <ProductionVM-NIC-Name> \
+  --resource-group HubSpokeRG \
+  --lb-name InternalLoadBalancer
+
+(Note: Ensure NSGs allow traffic on port 80 between internal VMs)
+

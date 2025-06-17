@@ -1,1 +1,167 @@
 
+Azure Storage Account Full Exploration Guide
+============================================
+
+This guide walks you through creating an Azure Storage Account and exploring all major features, including blobs, file shares, access keys, SAS, access tiers, policies, replication, and Azure File Sync.
+
+Reference Resources:
+- https://www.youtube.com/watch?v=E1t-x0T2bn0
+- https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview
+
+Step 1: Create Resource Group
+-----------------------------
+az group create --name StorageDemoRG --location eastus
+
+Step 2: Create Storage Account
+------------------------------
+az storage account create \
+  --name mystoragedemoacct01 \
+  --resource-group StorageDemoRG \
+  --location eastus \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --access-tier Hot
+
+Step 3: Upload and Access a Blob
+--------------------------------
+Create a container:
+az storage container create \
+  --name demo-container \
+  --account-name mystoragedemoacct01 \
+  --public-access blob
+
+Upload a file:
+az storage blob upload \
+  --account-name mystoragedemoacct01 \
+  --container-name demo-container \
+  --name myfile.txt \
+  --file ./myfile.txt
+
+Access it using:
+https://mystoragedemoacct01.blob.core.windows.net/demo-container/myfile.txt
+
+Step 4: Authentication Techniques
+---------------------------------
+Explore in Azure Portal:
+- Access Keys (2 keys)
+- Shared Access Signature (SAS)
+- Azure AD Authentication
+
+Step 5: Use Access Keys
+-----------------------
+Get Access Key:
+az storage account keys list \
+  --account-name mystoragedemoacct01 \
+  --resource-group StorageDemoRG
+
+Use Access Key with Azure Storage Explorer or CLI:
+az storage blob list \
+  --container-name demo-container \
+  --account-name mystoragedemoacct01 \
+  --account-key <key>
+
+Step 6: Shared Access Signature (SAS)
+-------------------------------------
+az storage container generate-sas \
+  --name demo-container \
+  --permissions r \
+  --account-name mystoragedemoacct01 \
+  --expiry 2025-12-31T23:59Z \
+  --output tsv
+
+Step 7: Stored Access Policy + SAS
+----------------------------------
+az storage container policy create \
+  --account-name mystoragedemoacct01 \
+  --container-name demo-container \
+  --name readonlypolicy \
+  --permission r \
+  --expiry 2025-12-31T23:59Z
+
+az storage container generate-sas \
+  --name demo-container \
+  --policy-name readonlypolicy \
+  --account-name mystoragedemoacct01 \
+  --output tsv
+
+Step 8: Access Tiers and Use Cases
+----------------------------------
+Set tier (Hot, Cool, Archive):
+az storage blob set-tier \
+  --account-name mystoragedemoacct01 \
+  --container-name demo-container \
+  --name myfile.txt \
+  --tier Cool
+
+Use Cases:
+- Hot: Frequent access
+- Cool: Infrequent access
+- Archive: Rare access, high latency to rehydrate
+
+Step 9: Lifecycle Management Policy
+-----------------------------------
+Create a rule in JSON file lifecycle.json:
+
+{
+  "rules": [
+    {
+      "enabled": true,
+      "name": "move-to-cool",
+      "type": "Lifecycle",
+      "definition": {
+        "filters": {
+          "blobTypes": ["blockBlob"],
+          "prefixMatch": ["demo-container/"]
+        },
+        "actions": {
+          "baseBlob": {
+            "tierToCool": { "daysAfterModificationGreaterThan": 30 },
+            "delete": { "daysAfterModificationGreaterThan": 90 }
+          }
+        }
+      }
+    }
+  ]
+}
+
+Apply rule:
+az storage account management-policy create \
+  --account-name mystoragedemoacct01 \
+  --resource-group StorageDemoRG \
+  --policy @lifecycle.json
+
+Step 10: Blob Replication
+-------------------------
+Replication must be set at creation time:
+- LRS (local), GRS (geo), RA-GRS, ZRS (zone)
+
+Change replication (if supported):
+az storage account update \
+  --name mystoragedemoacct01 \
+  --resource-group StorageDemoRG \
+  --sku Standard_GRS
+
+Step 11: Create a File Share
+----------------------------
+az storage share create \
+  --name myfileshare \
+  --account-name mystoragedemoacct01
+
+Upload file to share:
+az storage file upload \
+  --share-name myfileshare \
+  --source ./localfile.txt \
+  --path remote.txt \
+  --account-name mystoragedemoacct01
+
+Step 12: Azure File Sync Setup
+------------------------------
+1. Create File Sync Service in Azure Portal
+2. Download and install Azure File Sync agent on Windows Server
+3. Register server with Azure
+4. Create sync group and cloud endpoint (linked to file share)
+5. Add server endpoint (on-prem folder path)
+
+Monitor sync in Azure Portal or PowerShell.
+
+

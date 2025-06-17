@@ -1,1 +1,105 @@
 
+Azure Application Gateway Setup and Testing
+===========================================
+
+This guide walks through setting up and testing an Azure Application Gateway with two backend VMs running NGINX.
+
+Reference Video:
+https://www.youtube.com/watch?v=B3O6bXu-NbM
+
+Step 1: Create Resource Group
+-----------------------------
+az group create --name AppGatewayRG --location eastus
+
+Step 2: Create Virtual Network for Application Gateway
+------------------------------------------------------
+az network vnet create \
+  --name AppGatewayVNet \
+  --resource-group AppGatewayRG \
+  --location eastus \
+  --address-prefix 10.5.0.0/16 \
+  --subnet-name AppGatewaySubnet \
+  --subnet-prefix 10.5.1.0/24
+
+(Note: This subnet must be dedicated for Application Gateway)
+
+Step 3: Create Public IP Address for Application Gateway
+--------------------------------------------------------
+az network public-ip create \
+  --resource-group AppGatewayRG \
+  --name AppGatewayPublicIP \
+  --allocation-method Static \
+  --sku Standard
+
+Step 4: Create Application Gateway
+----------------------------------
+az network application-gateway create \
+  --name MyAppGateway \
+  --location eastus \
+  --resource-group AppGatewayRG \
+  --capacity 2 \
+  --sku Standard_v2 \
+  --http-settings-cookie-based-affinity Disabled \
+  --frontend-port 80 \
+  --http-settings-protocol Http \
+  --http-settings-port 80 \
+  --vnet-name AppGatewayVNet \
+  --subnet AppGatewaySubnet \
+  --public-ip-address AppGatewayPublicIP
+
+Step 5: Create a Separate Subnet for Application VMs
+-----------------------------------------------------
+az network vnet subnet create \
+  --name AppSubnet \
+  --vnet-name AppGatewayVNet \
+  --resource-group AppGatewayRG \
+  --address-prefix 10.5.2.0/24
+
+Step 6: Create Two Ubuntu Virtual Machines
+------------------------------------------
+az vm create \
+  --resource-group AppGatewayRG \
+  --name AppVM1 \
+  --vnet-name AppGatewayVNet \
+  --subnet AppSubnet \
+  --image Ubuntu2204 \
+  --admin-username azureuser \
+  --generate-ssh-keys
+
+az vm create \
+  --resource-group AppGatewayRG \
+  --name AppVM2 \
+  --vnet-name AppGatewayVNet \
+  --subnet AppSubnet \
+  --image Ubuntu2204 \
+  --admin-username azureuser \
+  --generate-ssh-keys
+
+Step 7: Install NGINX on Both VMs
+---------------------------------
+SSH into both AppVM1 and AppVM2 and run:
+sudo apt update
+sudo apt install nginx -y
+
+Customize NGINX pages:
+On AppVM1:
+echo "Welcome to AppVM1" | sudo tee /var/www/html/index.html
+
+On AppVM2:
+echo "Welcome to AppVM2" | sudo tee /var/www/html/index.html
+
+Step 8: Configure Application Gateway
+-------------------------------------
+(Use Azure Portal or CLI to do the following)
+- Add AppVM1 and AppVM2 NICs to the backend pool
+- Create a health probe on port 80
+- Create a listener on port 80
+- Add a rule to forward HTTP traffic to backend pool
+
+Step 9: Test the Application Gateway
+------------------------------------
+Get the public IP of Application Gateway:
+az network public-ip show --resource-group AppGatewayRG --name AppGatewayPublicIP --query ipAddress --output tsv
+
+Visit http://<AppGatewayPublicIP> in a browser. You should see responses alternating between AppVM1 and AppVM2.
+

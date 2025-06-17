@@ -1,1 +1,184 @@
+# Azure Network Architecture Setup and VM Deployment
+
+## Part A: Create a Virtual Network with Two Subnets
+
+1. Create a Resource Group:
+   az group create --name VNetResourceGroup --location eastus
+
+2. Create Virtual Network with Two Subnets:
+   az network vnet create \
+     --resource-group VNetResourceGroup \
+     --name MainVNet \
+     --address-prefix 10.0.0.0/16 \
+     --subnet-name Subnet-1 \
+     --subnet-prefix 10.0.1.0/24
+
+   az network vnet subnet create \
+     --resource-group VNetResourceGroup \
+     --vnet-name MainVNet \
+     --name Subnet-2 \
+     --address-prefix 10.0.2.0/24
+
+3. Deploy Linux VM in Subnet-1:
+   az vm create \
+     --resource-group VNetResourceGroup \
+     --name LinuxVM \
+     --vnet-name MainVNet \
+     --subnet Subnet-1 \
+     --image Ubuntu2204 \
+     --admin-username azureuser \
+     --generate-ssh-keys
+
+4. Deploy Windows VM in Subnet-1:
+   az vm create \
+     --resource-group VNetResourceGroup \
+     --name WindowsVM \
+     --vnet-name MainVNet \
+     --subnet Subnet-1 \
+     --image Win2022Datacenter \
+     --admin-username azureuser \
+     --admin-password MyP@ssword1234
+
+5. Deploy SQL DB in Subnet-2 (optional, or use placeholder VM):
+   az vm create \
+     --resource-group VNetResourceGroup \
+     --name SQLVM \
+     --vnet-name MainVNet \
+     --subnet Subnet-2 \
+     --image Win2022Datacenter \
+     --admin-username azureuser \
+     --admin-password MyP@ssword1234
+
+## Part B: Hub and Spoke Network Setup with VNet Peering
+
+1. Create 4 Resource Groups (optional or use one):
+   az group create --name HubSpokeRG --location eastus
+
+2. Create VNets:
+   az network vnet create \
+     --resource-group HubSpokeRG \
+     --name ManagementVNet \
+     --address-prefix 10.1.0.0/16 \
+     --subnet-name ManagementSubnet \
+     --subnet-prefix 10.1.0.0/24
+
+   az network vnet create \
+     --resource-group HubSpokeRG \
+     --name ProductionVNet \
+     --address-prefix 10.2.0.0/16 \
+     --subnet-name ProductionSubnet \
+     --subnet-prefix 10.2.0.0/24
+
+   az network vnet create \
+     --resource-group HubSpokeRG \
+     --name TestingVNet \
+     --address-prefix 10.3.0.0/16 \
+     --subnet-name TestingSubnet \
+     --subnet-prefix 10.3.0.0/24
+
+   az network vnet create \
+     --resource-group HubSpokeRG \
+     --name DevelopmentVNet \
+     --address-prefix 10.4.0.0/16 \
+     --subnet-name DevelopmentSubnet \
+     --subnet-prefix 10.4.0.0/24
+
+3. VNet Peering (Hub and Spoke):
+   az network vnet peering create \
+     --name ManagementToProduction \
+     --resource-group HubSpokeRG \
+     --vnet-name ManagementVNet \
+     --remote-vnet ProductionVNet \
+     --allow-vnet-access
+
+   az network vnet peering create \
+     --name ProductionToManagement \
+     --resource-group HubSpokeRG \
+     --vnet-name ProductionVNet \
+     --remote-vnet ManagementVNet \
+     --allow-vnet-access
+
+   az network vnet peering create \
+     --name ManagementToTesting \
+     --resource-group HubSpokeRG \
+     --vnet-name ManagementVNet \
+     --remote-vnet TestingVNet \
+     --allow-vnet-access
+
+   az network vnet peering create \
+     --name TestingToManagement \
+     --resource-group HubSpokeRG \
+     --vnet-name TestingVNet \
+     --remote-vnet ManagementVNet \
+     --allow-vnet-access
+
+   az network vnet peering create \
+     --name ManagementToDevelopment \
+     --resource-group HubSpokeRG \
+     --vnet-name ManagementVNet \
+     --remote-vnet DevelopmentVNet \
+     --allow-vnet-access
+
+   az network vnet peering create \
+     --name DevelopmentToManagement \
+     --resource-group HubSpokeRG \
+     --vnet-name DevelopmentVNet \
+     --remote-vnet ManagementVNet \
+     --allow-vnet-access
+
+4. Deploy One VM in Each VNet:
+
+   Management VM:
+   az vm create \
+     --resource-group HubSpokeRG \
+     --name ManagementVM \
+     --vnet-name ManagementVNet \
+     --subnet ManagementSubnet \
+     --image Ubuntu2204 \
+     --admin-username azureuser \
+     --generate-ssh-keys
+
+   Production VM:
+   az vm create \
+     --resource-group HubSpokeRG \
+     --name ProductionVM \
+     --vnet-name ProductionVNet \
+     --subnet ProductionSubnet \
+     --image Ubuntu2204 \
+     --admin-username azureuser \
+     --generate-ssh-keys
+
+   Testing VM:
+   az vm create \
+     --resource-group HubSpokeRG \
+     --name TestingVM \
+     --vnet-name TestingVNet \
+     --subnet TestingSubnet \
+     --image Ubuntu2204 \
+     --admin-username azureuser \
+     --generate-ssh-keys
+
+   Development VM:
+   az vm create \
+     --resource-group HubSpokeRG \
+     --name DevelopmentVM \
+     --vnet-name DevelopmentVNet \
+     --subnet DevelopmentSubnet \
+     --image Ubuntu2204 \
+     --admin-username azureuser \
+     --generate-ssh-keys
+
+5. Verify Connectivity:
+
+   a. SSH into ManagementVM:
+      ssh azureuser@<Public-IP-of-ManagementVM>
+
+   b. Ping other VMs (get private IPs from portal or CLI):
+      ping <Private-IP-of-ProductionVM>
+      ping <Private-IP-of-TestingVM>
+      ping <Private-IP-of-DevelopmentVM>
+
+   Expected: Ping should succeed due to VNet peering.
+
+This completes the setup of VNet with subnets and the Hub-and-Spoke architecture.
 

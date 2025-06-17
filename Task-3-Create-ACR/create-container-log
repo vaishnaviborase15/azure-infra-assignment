@@ -1,0 +1,156 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\WINDOWS\system32> az --version
+azure-cli                         2.74.0
+
+core                              2.74.0
+telemetry                          1.1.0
+
+Dependencies:
+msal                              1.32.3
+azure-mgmt-resource               23.3.0
+
+Python location 'C:\Program Files\Microsoft SDKs\Azure\CLI2\python.exe'
+Config directory 'C:\Users\Vaishnavi Borase\.azure'
+Extensions directory 'C:\Users\Vaishnavi Borase\.azure\cliextensions'
+
+Python (Windows) 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+
+Legal docs and information: aka.ms/AzureCliLegal
+
+
+Your CLI is up-to-date.
+PS C:\WINDOWS\system32> az login
+Select the account you want to log in with. For more information on login with Azure CLI, see https://go.microsoft.com/fwlink/?linkid=2271136
+
+Retrieving tenants and subscriptions for the selection...
+
+[Tenant and subscription selection]
+
+No     Subscription name    Subscription ID                       Tenant
+-----  -------------------  ------------------------------------  -------------------------
+[1] *  Azure for Students   78b45807-4c0f-42c8-a888-49751e831f0a  Shirpur Education Society
+
+The default is marked with an *; the default tenant is 'Shirpur Education Society' and subscription is 'Azure for Students' (78b45807-4c0f-42c8-a888-49751e831f0a).
+
+Select a subscription and tenant (Type a number or Enter for no changes):
+
+Tenant: Shirpur Education Society
+Subscription: Azure for Students (78b45807-4c0f-42c8-a888-49751e831f0a)
+
+[Announcements]
+With the new Azure CLI login experience, you can select the subscription you want to use more easily. Learn more about it and its configuration at https://go.microsoft.com/fwlink/?linkid=2271236
+
+If you encounter any problem, please open an issue at https://aka.ms/azclibug
+
+[Warning] The login output has been updated. Please be aware that it no longer displays the full list of available subscriptions by default.
+
+PS C:\WINDOWS\system32> az acr login --name w2containerregistry
+You may want to use 'az acr login -n w2containerregistry --expose-token' to get a refresh token, which does not require Docker to be installed.
+2025-06-17 12:19:34.612088 An error occurred: DOCKER_COMMAND_ERROR
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.49/containers/json": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+PS C:\WINDOWS\system32>
+PS C:\WINDOWS\system32> az acr login -n w2containerregistry --expose-token
+Unable to get AAD authorization tokens with message: 2025-06-17 12:20:34.925870 An error occurred: CONNECTIVITY_REFRESH_TOKEN_ERROR
+Access to registry 'w2containerregistry.azurecr.io' was denied. Response code: 401. Please try running 'az login' again to refresh permissions.
+Unable to get admin user credentials with message: The resource with name 'w2containerregistry' and type 'Microsoft.ContainerRegistry/registries' could not be found in subscription 'Azure for Students (78b45807-4c0f-42c8-a888-49751e831f0a)'.
+Username: az acr list --output table
+Password:
+Note: The token in both the accessToken and refreshToken fields is an ACR Refresh Token, not an ACR Access Token. This ACR Refresh Token cannot be used directly to authenticate with registry APIs such as pushing/pulling images and listing repositories/tags. This ACR Refresh Token must be subsequently exchanged for an ACR Access.Please see https://aka.ms/acr/auth/oauth
+You can perform manual login using the provided refresh token below, for example: 'docker login loginServer -u 00000000-0000-0000-0000-000000000000 -p refreshToken'
+{
+  "accessToken": "",
+  "loginServer": "w2containerregistry.azurecr.io",
+  "refreshToken": "",
+  "username": "00000000-0000-0000-0000-000000000000"
+}
+PS C:\WINDOWS\system32> az acr list --output table
+NAME                            RESOURCE GROUP       LOCATION      SKU    LOGIN SERVER                               CREATION DATE         ADMIN ENABLED
+------------------------------  -------------------  ------------  -----  -----------------------------------------  --------------------  ---------------
+w2containerregistryvaishnavi01  DemoResourceGrW2     centralindia  Basic  w2containerregistryvaishnavi01.azurecr.io  2025-06-17T05:49:35Z  True
+vaishacrregistry                RG-VaishWebAppDemo   centralindia  Basic  vaishacrregistry.azurecr.io                2025-06-17T05:06:35Z  True
+vaishacrregistryvaishnavi01     VaishsResourceGroup  centralindia  Basic  vaishacrregistryvaishnavi01.azurecr.io     2025-06-17T05:23:57Z  True
+PS C:\WINDOWS\system32>
+PS C:\WINDOWS\system32> az acr login --name w2containerregistryvaishnavi01
+You may want to use 'az acr login -n w2containerregistryvaishnavi01 --expose-token' to get a refresh token, which does not require Docker to be installed.
+2025-06-17 12:22:23.306888 An error occurred: DOCKER_COMMAND_ERROR
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.49/containers/json": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+PS C:\WINDOWS\system32> az acr login --name w2containerregistryvaishnavi01 --expose-token
+Note: The token in both the accessToken and refreshToken fields is an ACR Refresh Token, not an ACR Access Token. This ACR Refresh Token cannot be used directly to authenticate with registry APIs such as pushing/pulling images and listing repositories/tags. This ACR Refresh Token must be subsequently exchanged for an ACR Access.Please see https://aka.ms/acr/auth/oauth
+You can perform manual login using the provided refresh token below, for example: 'docker login loginServer -u 00000000-0000-0000-0000-000000000000 -p refreshToken'
+{
+  "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFNTDU6UUNMWjpCRDQ1OkRSRDI6RkdESTo3Q1NGOkdVUEI6V1RWQTpVVUtJOjRKN1Y6Mjc0QTpQSkRVIn0.eyJqdGkiOiI1YmM0M2E2MC05Y2Y3LTQ1MWYtOWNjMi1iOTk0Y2Y3NTNkZmUiLCJzdWIiOiIyMjExMDYwMTRAcmNwaXQuYWMuaW4iLCJuYmYiOjE3NTAxNjIwODIsImV4cCI6MTc1MDE3Mzc4MiwiaWF0IjoxNzUwMTYyMDgyLCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJ3MmNvbnRhaW5lcnJlZ2lzdHJ5dmFpc2huYXZpMDEuYXp1cmVjci5pbyIsInZlcnNpb24iOiIxLjAiLCJyaWQiOiIyNTU4YjhkOGIyMTI0ZmY2Yjg4ZDVkYWM3OWQwY2I0OCIsImdyYW50X3R5cGUiOiJyZWZyZXNoX3Rva2VuIiwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJ0ZW5hbnQiOiIzNTM3OGZmMi04OTEyLTQ0MDItOTFiOS0yOTkyZjNjMDNkYTMiLCJwZXJtaXNzaW9ucyI6eyJhY3Rpb25zIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSIsIm1ldGFkYXRhL3JlYWQiLCJtZXRhZGF0YS93cml0ZSIsImRlbGV0ZWQvcmVhZCIsImRlbGV0ZWQvcmVzdG9yZS9hY3Rpb24iXX0sInJvbGVzIjpbXX0.Jk98eKH6Kqx3PwWDSihXuzdN0A1bq4yvg96sZBC8GaEpKBthfp8IFdftki_BEU9Fjz7q-vjDZ-f0HfqhEmhhY4SvMY1X2bwdl72EA1lb42zoY8SCQf5tZ-VRBEgqbWw6YYGZUuZRHOsNuplj30fmKPO7hQehsGP9LwLIEUpvfiEy4l_nyjkQIUtQ2kinsdC_ECpgNKXHOvshJ3HVTOXBQd6Ef0m6bOl4W4NjIFN0lC3yroM4FoCqMZNYUUjDmm4nvmT85fu65-LLbRUATRz3JSCqRJb-4PxF2pkO4QYF-PVzgKh0WDyCYnpuVwhrsX_SKcajOAfwsJBszj-Vt03CxA",
+  "loginServer": "w2containerregistryvaishnavi01.azurecr.io",
+  "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFNTDU6UUNMWjpCRDQ1OkRSRDI6RkdESTo3Q1NGOkdVUEI6V1RWQTpVVUtJOjRKN1Y6Mjc0QTpQSkRVIn0.eyJqdGkiOiI1YmM0M2E2MC05Y2Y3LTQ1MWYtOWNjMi1iOTk0Y2Y3NTNkZmUiLCJzdWIiOiIyMjExMDYwMTRAcmNwaXQuYWMuaW4iLCJuYmYiOjE3NTAxNjIwODIsImV4cCI6MTc1MDE3Mzc4MiwiaWF0IjoxNzUwMTYyMDgyLCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJ3MmNvbnRhaW5lcnJlZ2lzdHJ5dmFpc2huYXZpMDEuYXp1cmVjci5pbyIsInZlcnNpb24iOiIxLjAiLCJyaWQiOiIyNTU4YjhkOGIyMTI0ZmY2Yjg4ZDVkYWM3OWQwY2I0OCIsImdyYW50X3R5cGUiOiJyZWZyZXNoX3Rva2VuIiwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJ0ZW5hbnQiOiIzNTM3OGZmMi04OTEyLTQ0MDItOTFiOS0yOTkyZjNjMDNkYTMiLCJwZXJtaXNzaW9ucyI6eyJhY3Rpb25zIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSIsIm1ldGFkYXRhL3JlYWQiLCJtZXRhZGF0YS93cml0ZSIsImRlbGV0ZWQvcmVhZCIsImRlbGV0ZWQvcmVzdG9yZS9hY3Rpb24iXX0sInJvbGVzIjpbXX0.Jk98eKH6Kqx3PwWDSihXuzdN0A1bq4yvg96sZBC8GaEpKBthfp8IFdftki_BEU9Fjz7q-vjDZ-f0HfqhEmhhY4SvMY1X2bwdl72EA1lb42zoY8SCQf5tZ-VRBEgqbWw6YYGZUuZRHOsNuplj30fmKPO7hQehsGP9LwLIEUpvfiEy4l_nyjkQIUtQ2kinsdC_ECpgNKXHOvshJ3HVTOXBQd6Ef0m6bOl4W4NjIFN0lC3yroM4FoCqMZNYUUjDmm4nvmT85fu65-LLbRUATRz3JSCqRJb-4PxF2pkO4QYF-PVzgKh0WDyCYnpuVwhrsX_SKcajOAfwsJBszj-Vt03CxA",
+  "username": "00000000-0000-0000-0000-000000000000"
+}
+PS C:\WINDOWS\system32> cd C:\Users\Vaishnavi Borase\Desktop\MyDockerApp>
+Set-Location : A positional parameter cannot be found that accepts argument 'Borase\Desktop\MyDockerApp>'.
+At line:1 char:1
++ cd C:\Users\Vaishnavi Borase\Desktop\MyDockerApp>
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-Location], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+PS C:\WINDOWS\system32> cd "C:\Users\Vaishnavi Borase\Desktop\MyDockerApp"
+PS C:\Users\Vaishnavi Borase\Desktop\MyDockerApp> docker build -t myapp:v1 .
+ERROR: error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+PS C:\Users\Vaishnavi Borase\Desktop\MyDockerApp> rename-item Dockerfile.txt Dockerfile
+PS C:\Users\Vaishnavi Borase\Desktop\MyDockerApp> dir
+
+
+    Directory: C:\Users\Vaishnavi Borase\Desktop\MyDockerApp
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         6/17/2025   6:40 PM             60 app.py
+-a----         6/17/2025   6:42 PM            266 Dockerfile
+
+
+PS C:\Users\Vaishnavi Borase\Desktop\MyDockerApp> docker build -t vaishacrregistryvaishnavi01.azurecr.io/vaishapp:v1 .
+[+] Building 33.7s (9/9) FINISHED                                                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 305B                                                                               0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-slim                                                 5.4s
+ => [auth] library/python:pull token for registry-1.docker.io                                                      0.0s
+ => [internal] load .dockerignore                                                                                  0.1s
+ => => transferring context: 2B                                                                                    0.0s
+ => [1/3] FROM docker.io/library/python:3.9-slim@sha256:a40cf9eba2c3ed9226afa9ace504f07ad30fe831343bb1c69f7a6707  26.2s
+ => => resolve docker.io/library/python:3.9-slim@sha256:a40cf9eba2c3ed9226afa9ace504f07ad30fe831343bb1c69f7a6707a  0.2s
+ => => sha256:ea13ebdb5390b4e3fa5651d1daf14e6756a134f9a168fbedde44f02b1cee5fa8 250B / 250B                         0.4s
+ => => sha256:cd1e1b7e12d38cac4095e7ea4f161334542f130d381d6ef2013fa1ac01b4b6b0 14.94MB / 14.94MB                  15.8s
+ => => sha256:20a97c0d8fc11f8337ff080be3f192c7211a0b7d1e6b886d6d2cff6674761652 3.51MB / 3.51MB                    14.6s
+ => => sha256:dad67da3f26bce15939543965e09c4059533b025f707aad72ed3d3f3a09c66f8 28.23MB / 28.23MB                  19.2s
+ => => extracting sha256:dad67da3f26bce15939543965e09c4059533b025f707aad72ed3d3f3a09c66f8                          3.9s
+ => => extracting sha256:20a97c0d8fc11f8337ff080be3f192c7211a0b7d1e6b886d6d2cff6674761652                          0.4s
+ => => extracting sha256:cd1e1b7e12d38cac4095e7ea4f161334542f130d381d6ef2013fa1ac01b4b6b0                          2.0s
+ => => extracting sha256:ea13ebdb5390b4e3fa5651d1daf14e6756a134f9a168fbedde44f02b1cee5fa8                          0.1s
+ => [internal] load build context                                                                                  0.2s
+ => => transferring context: 400B                                                                                  0.0s
+ => [2/3] WORKDIR /app                                                                                             0.7s
+ => [3/3] COPY . .                                                                                                 0.1s
+ => exporting to image                                                                                             0.9s
+ => => exporting layers                                                                                            0.3s
+ => => exporting manifest sha256:4af0d625bca99ba9aaa73682dda5ab3c3a62106f1df5acea481497586b265ca2                  0.0s
+ => => exporting config sha256:aa7ea6dc3b25c413121f69b4e925e853c8c047980a3e79c28cbd61cc496f87da                    0.0s
+ => => exporting attestation manifest sha256:08f8663656c34957304b8d526d1944207ce8a43667b486ff006557a72a653adb      0.1s
+ => => exporting manifest list sha256:2bd055256677b820d0a70e873d0019b85046b0e8b097eb75b1647ec15b756895             0.0s
+ => => naming to vaishacrregistryvaishnavi01.azurecr.io/vaishapp:v1                                                0.0s
+ => => unpacking to vaishacrregistryvaishnavi01.azurecr.io/vaishapp:v1                                             0.1s
+PS C:\Users\Vaishnavi Borase\Desktop\MyDockerApp> docker push vaishacrregistryvaishnavi01.azurecr.io/vaishapp:v1
+The push refers to repository [vaishacrregistryvaishnavi01.azurecr.io/vaishapp]
+bae33a977b87: Pushed
+aa0a292a960d: Pushed
+cd1e1b7e12d3: Pushed
+ea13ebdb5390: Pushed
+20a97c0d8fc1: Pushed
+00d1e44d15f4: Pushed
+dad67da3f26b: Pushed
+v1: digest: sha256:2bd055256677b820d0a70e873d0019b85046b0e8b097eb75b1647ec15b756895 size: 856
+PS C:\Users\Vaishnavi Borase\Desktop\MyDockerApp>

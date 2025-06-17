@@ -1,1 +1,90 @@
 
+Set Up a Custom Domain with Azure DNS and VM Web Server
+========================================================
+
+This guide walks you through setting up a domain, configuring DNS in Azure, and directing traffic to a web server running on a VM.
+
+Reference Video:
+https://www.youtube.com/watch?v=57ZwdztCx2w&pp=ygUSYXp1cmUgcHJpdmF0ZSBsaW5r
+
+Step 1: Purchase a Custom Domain
+--------------------------------
+- Buy a domain from any domain registrar (e.g., GoDaddy, Namecheap).
+- Example: mycustomdomain.com
+
+Step 2: Create a Resource Group
+-------------------------------
+az group create --name DNSDemoRG --location eastus
+
+Step 3: Create Azure DNS Zone
+-----------------------------
+az network dns zone create \
+  --resource-group DNSDemoRG \
+  --name mycustomdomain.com
+
+Step 4: Get Azure Nameservers
+-----------------------------
+az network dns zone show \
+  --resource-group DNSDemoRG \
+  --name mycustomdomain.com \
+  --query nameServers
+
+- Copy the name servers and update them in your domain registrar's DNS settings (Name Server settings).
+- This step delegates DNS control to Azure.
+
+Step 5: Create a VM Web Server
+------------------------------
+az vm create \
+  --resource-group DNSDemoRG \
+  --name WebServerVM \
+  --image Ubuntu2204 \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --public-ip-sku Standard
+
+Step 6: Install Web Server on the VM
+------------------------------------
+SSH into the VM:
+ssh azureuser@<Public-IP>
+
+Install NGINX:
+sudo apt update
+sudo apt install nginx -y
+
+Edit welcome page:
+echo "Welcome to My Custom Domain Web Server" | sudo tee /var/www/html/index.html
+
+Step 7: Get the Public IP of the VM
+-----------------------------------
+az vm list-ip-addresses \
+  --resource-group DNSDemoRG \
+  --name WebServerVM \
+  --query "[].virtualMachine.network.publicIpAddresses[].ipAddress" \
+  --output tsv
+
+Step 8: Create an A Record in Azure DNS
+---------------------------------------
+az network dns record-set a add-record \
+  --resource-group DNSDemoRG \
+  --zone-name mycustomdomain.com \
+  --record-set-name www \
+  --ipv4-address <Public-IP-of-VM>
+
+Step 9: Test the Setup
+----------------------
+- In your browser, open: http://www.mycustomdomain.com
+- You should see: "Welcome to My Custom Domain Web Server"
+
+Optional: Add More DNS Records (e.g., CNAME, MX)
+------------------------------------------------
+az network dns record-set cname set-record \
+  --resource-group DNSDemoRG \
+  --zone-name mycustomdomain.com \
+  --record-set-name app \
+  --cname www.mycustomdomain.com
+
+Security Group Note:
+---------------------
+Ensure that inbound traffic on port 80 is allowed in the NSG of the VM:
+az vm open-port --port 80 --resource-group DNSDemoRG --name WebServerVM
+
